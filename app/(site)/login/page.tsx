@@ -29,7 +29,6 @@ const Login: React.FC = () => {
         await signIn('credentials', { email, password, redirect: false })
 
         toast.success('Logged in successfully')
-
         router.push('/')
       } catch (error) {
         console.log(error)
@@ -42,6 +41,7 @@ const Login: React.FC = () => {
   const handlerLoginWithProvider = useCallback(async (type: string) => {
     try {
       await signIn(type, { callbackUrl: '/' })
+      toast.success('Logged in successfully')
     } catch (error) {
       console.log(error)
       toast.error('Something went wrong')

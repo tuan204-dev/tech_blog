@@ -33,5 +33,10 @@
     "@types/bcrypt": "^5.0.0",
     "@types/randomstring": "^1.1.8",
     "prisma": "^5.2.0"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }

@@ -1,8 +1,8 @@
+import bcrypt from 'bcrypt'
 import { getServerSession } from 'next-auth'
+import Link from 'next/link'
 import { authOptions } from './api/auth/[...nextauth]/options'
 import prisma from './libs/prismadb'
-import bcrypt from 'bcrypt'
-import Link from 'next/link'
 import axios from 'axios'
 
 async function createStaticUser() {
@@ -24,7 +24,7 @@ async function createStaticUser() {
 
 export default async function Home() {
   const session = await getServerSession(authOptions)
-  console.log('server session: ',session)
+  console.log('server session: ', session)
 
   // await createStaticUser()
 

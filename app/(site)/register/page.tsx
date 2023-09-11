@@ -1,13 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 const Register: React.FC = () => {
+  const [isLoading, setLoading] = useState<boolean>(false)
   const nameRef = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
@@ -21,6 +22,7 @@ const Register: React.FC = () => {
   const handlerSubmit = useCallback(
     async (e: any) => {
       e.preventDefault()
+      setLoading(true)
       const email = emailRef?.current?.value
       const password = passwordRef?.current?.value
       const name = nameRef?.current?.value
@@ -31,15 +33,14 @@ const Register: React.FC = () => {
           password,
           name,
         })
-        await signIn('credentials', { email, password, redirect: false})
+        await signIn('credentials', { email, password, callbackUrl: '/', redirect: false })
         toast.success('Account created successfully')
-        router.push('/')
       } catch (error) {
         console.log(error)
         toast.error('Something went wrong')
       }
     },
-    [emailRef, passwordRef, nameRef, router]
+    [emailRef, passwordRef, nameRef]
   )
 
   return (
@@ -120,7 +121,8 @@ const Register: React.FC = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={isLoading}
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 disabled:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed"
               >
                 Register
               </button>

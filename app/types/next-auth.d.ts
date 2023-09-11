@@ -23,9 +23,29 @@ declare module 'next-auth' {
   interface Session {
     user: DefaultSession['user'] & {
       id: string
+      bio: string | null
+      username: string | null
+      image: string | null
+      coverImage: string | null
+      profileImage: string | null
+      createdAt: Date
+      updatedAt: Date
+      followingIds: string[]
     }
   }
+
+  // interface User extends DefaultUser {
+  //   profileImage: string | null
+  // }
 }
+
+// declare module '@next-auth/prisma-adapter' {
+//   interface User {
+//     user: DefaultUser['user'] & {
+//       profileImage: string | null
+//     }
+//   }
+// }
 
 // declare module "next-auth" {
 //   interface User {

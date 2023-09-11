@@ -5,6 +5,8 @@ import type { NextAuthOptions } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
+import { getServerSession } from 'next-auth'
+import { NextResponse } from 'next/server'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -62,35 +64,40 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
     newUser: '/register',
   },
-  // callbacks: {
-  //   async signIn({ user }) {
-  //     const session = await getSession();
-  //     console.log('session: ', session)
-  //     console.log(user)
+  callbacks: {
+    async session({ session }) {
+      if (!session.user || !session.user.email) return session
 
-  //     return true
-  //   },
-  //   async session({ session, newSession, token, user,  }) {
-  //     // session.user!.id = currentUserId as string
-  //     // newSession = {...session}
-  //     // newSession.user!.id = currentUserId as string
-  //     // console.log('token: ', token)
-  //     // console.log('session id: ', session)
-  //     // return newSession
+      const currentUser = await prisma.user.findUnique({
+        where: {
+          email: session.user.email,
+        },
+      })
 
-  //     console.log('user session: ', user)
+      // add more user info to session
+      if (currentUser) {
+        session.user.id = currentUser.id as string
+        session.user.bio = currentUser.bio
+        session.user.username = currentUser.username
+        session.user.image = currentUser.image
+        session.user.coverImage = currentUser.coverImage
+        session.user.profileImage = currentUser.profileImage
+        session.user.createdAt = currentUser.createdAt
+        session.user.updatedAt = currentUser.updatedAt
+        session.user.followingIds = currentUser.followingIds
+      }
 
-  //     return session
-  //   },
-  //   // async jwt({account, token, user, profile, session, trigger}) {
-  //   //   console.log({account, token, user, profile, session, trigger})
+      return session
+    },
+  },
+}
 
-  //   //   return token
-  //   // }
-  // },
-  // events: {
-  //   async signIn(message) {
-  //     console.log('msg: ', message)
-  //   },
-  // },
+export const getAuthSession = () => getServerSession(authOptions)
+
+export const getSessionOrUnauthorized = async () => {
+  const session = await getAuthSession()
+  if (!session) {
+    return NextResponse.json('Unauthorized', { status: 401 })
+  }
+  return session
 }
