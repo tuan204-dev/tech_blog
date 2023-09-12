@@ -2,7 +2,6 @@ import { getAuthSession } from '@/app/api/auth/[...nextauth]/options'
 import prisma from '@/app/libs/prismadb'
 import { NextRequest, NextResponse } from 'next/server'
 
-
 // get all posts from user (from, take)
 export const GET = async (req: NextRequest) => {
   const url = new URL(req.url)
@@ -19,6 +18,8 @@ export const GET = async (req: NextRequest) => {
       (await prisma.post.findMany({
         where: {
           userId,
+          accepted: false,
+          // accepted: true, in production
         },
         include: {
           user: true,

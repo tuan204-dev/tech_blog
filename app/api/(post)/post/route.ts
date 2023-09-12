@@ -1,14 +1,12 @@
 import prisma from '@/app/libs/prismadb'
+import type { Session } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
-import { getAuthSession } from '../../auth/[...nextauth]/options'
-
+import { getSessionOrUnauthorized } from '../../auth/[...nextauth]/options'
 
 //create new post
 export const POST = async (req: NextRequest) => {
   try {
-    const session = await getAuthSession()
-
-    if (!session) return NextResponse.json('Unauthorized', { status: 401 })
+    const session = (await getSessionOrUnauthorized()) as Session
     const { title, body, rawBody, desc = '' } = await req.json()
 
     const post = await prisma.post.create({

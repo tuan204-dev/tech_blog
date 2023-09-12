@@ -41,7 +41,6 @@ const Login: React.FC = () => {
   const handlerLoginWithProvider = useCallback(async (type: string) => {
     try {
       await signIn(type, { callbackUrl: '/' })
-      toast.success('Logged in successfully')
     } catch (error) {
       console.log(error)
       toast.error('Something went wrong')

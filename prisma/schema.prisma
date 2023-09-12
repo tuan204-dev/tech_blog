@@ -42,6 +42,7 @@ model User {
   profileImage    String?
   hashedPassword  String?
   followingIds    String[]  @db.ObjectId
+  followerIds     String[]  @db.ObjectId
   hasNotification Boolean?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -53,12 +54,22 @@ model User {
   repliedComment RepliedComment[]
 }
 
+model AdminAccount {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String
+  hashedPassword String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
 model Post {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
   title     String
   desc      String?
   body      String   @default("")
+  accepted  Boolean  @default(false)
   rawBody   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

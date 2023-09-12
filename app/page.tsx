@@ -24,12 +24,11 @@ async function createStaticUser() {
 
 export default async function Home() {
   const session = await getServerSession(authOptions)
-  console.log('server session: ', session)
 
   // await createStaticUser()
 
   return (
-    <div>
+    <div className="text-white">
       {JSON.stringify(session)}
       <div className="flex gap-8">
         <Link href="/login">

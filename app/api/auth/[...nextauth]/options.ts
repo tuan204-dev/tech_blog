@@ -76,6 +76,8 @@ export const authOptions: NextAuthOptions = {
 
       // add more user info to session
       if (currentUser) {
+        session.user.name = currentUser.name
+        session.user.email = currentUser.email
         session.user.id = currentUser.id as string
         session.user.bio = currentUser.bio
         session.user.username = currentUser.username

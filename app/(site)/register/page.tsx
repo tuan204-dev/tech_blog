@@ -23,9 +23,9 @@ const Register: React.FC = () => {
     async (e: any) => {
       e.preventDefault()
       setLoading(true)
-      const email = emailRef?.current?.value
-      const password = passwordRef?.current?.value
-      const name = nameRef?.current?.value
+      const email = emailRef?.current?.value.trim()
+      const password = passwordRef?.current?.value.trim()
+      const name = nameRef?.current?.value.trim()
 
       try {
         await axios.post('/api/register', {
@@ -33,7 +33,12 @@ const Register: React.FC = () => {
           password,
           name,
         })
-        await signIn('credentials', { email, password, callbackUrl: '/', redirect: false })
+        await signIn('credentials', {
+          email,
+          password,
+          callbackUrl: '/',
+          redirect: false,
+        })
         toast.success('Account created successfully')
       } catch (error) {
         console.log(error)

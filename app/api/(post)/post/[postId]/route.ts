@@ -1,9 +1,10 @@
-import { getAuthSession, getSessionOrUnauthorized } from '@/app/api/auth/[...nextauth]/options'
+import {
+  getAuthSession,
+  getSessionOrUnauthorized,
+} from '@/app/api/auth/[...nextauth]/options'
 import type { Session } from 'next-auth'
 import prisma from '@/app/libs/prismadb'
 import { NextRequest, NextResponse } from 'next/server'
-
-
 
 //get specific post
 export const GET = async (req: NextRequest) => {
@@ -17,6 +18,7 @@ export const GET = async (req: NextRequest) => {
     const post = await prisma.post.findUnique({
       where: {
         id: postId,
+        accepted: true,
       },
     })
 
