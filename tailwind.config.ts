@@ -13,9 +13,14 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        'dark-base': '#202124',
+        border: '#52586633',
+        'dark-border': '#52586633',
+      },
     },
   },
   darkMode: 'class',
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 }
 export default config

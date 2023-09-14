@@ -26,10 +26,14 @@ const Login: React.FC = () => {
         const email = emailRef?.current?.value
         const password = passwordRef?.current?.value
 
-        await signIn('credentials', { email, password, redirect: false })
+        const res = await signIn('credentials', { email, password, redirect: false })
 
-        toast.success('Logged in successfully')
-        router.push('/')
+        if (!res?.error) {
+          toast.success('Logged in successfully')
+          router.push('/')
+        } else {
+          toast.error('Invalid credentials')
+        }
       } catch (error) {
         console.log(error)
         toast.error('Something went wrong')
@@ -115,7 +119,7 @@ const Login: React.FC = () => {
           <div className="flex flex-col gap-5 mt-5">
             <button
               onClick={() => handlerLoginWithProvider('google')}
-              className="flex flex-row py-2 justify-center items-center w-full border-gray-200 border-2 rounded-md bg-white hover:bg-gray-100 shadow-sm"
+              className="flex flex-row py-2 justify-center items-center w-full border-gray-200 border-2 rounded-md bg-white text-black hover:bg-gray-100 shadow-sm"
             >
               <Image
                 className="mr-2"
@@ -129,7 +133,7 @@ const Login: React.FC = () => {
             </button>
             <button
               onClick={() => handlerLoginWithProvider('github')}
-              className="flex flex-row py-2 justify-center items-center w-full border-gray-200 border-2 rounded-md bg-white hover:bg-gray-100 shadow-sm"
+              className="flex flex-row py-2 justify-center items-center w-full border-gray-200 border-2 rounded-md bg-white text-black hover:bg-gray-100 shadow-sm"
             >
               <Image
                 className="mr-2"

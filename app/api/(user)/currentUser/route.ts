@@ -1,16 +1,16 @@
 import prisma from '@/app/libs/prismadb'
-import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
-import { authOptions } from '../../auth/[...nextauth]/options'
+import { getAuthSession } from '../../auth/[...nextauth]/options'
 
 export const GET = async () => {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await getAuthSession()
 
     // console.log('session API: ', session)
 
-    if (!session || !session.user.email)
+    if (!session || !session.user.email) {
       return NextResponse.json('User not found', { status: 404 })
+    }
 
     const currentUser = await prisma.user.findUnique({
       where: {
@@ -25,5 +25,6 @@ export const GET = async () => {
     return NextResponse.json(currentUser)
   } catch (error) {
     console.log(error)
+    return NextResponse.json('Bad request', { status: 400 })
   }
 }

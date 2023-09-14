@@ -69,6 +69,7 @@ model Post {
   title     String
   desc      String?
   body      String   @default("")
+  thumbnail String
   accepted  Boolean  @default(false)
   rawBody   String
   createdAt DateTime @default(now())

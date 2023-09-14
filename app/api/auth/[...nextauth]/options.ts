@@ -18,32 +18,35 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Please enter an email and password')
-        }
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error('Please enter an email and password')
+          }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        })
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          })
 
-        if (!user || !user?.hashedPassword) {
+          if (!user || !user?.hashedPassword) {
+            throw new Error('Invalid credentials')
+          }
+
+          const isCorrectPassword = await bcrypt.compare(
+            credentials?.password,
+            user.hashedPassword
+          )
+
+          if (!isCorrectPassword) {
+            throw new Error('Invalid credentials')
+          }
+
+          return user
+        } catch (error) {
+          console.log(error)
           throw new Error('Invalid credentials')
         }
-
-        const isCorrectPassword = await bcrypt.compare(
-          credentials?.password,
-          user.hashedPassword
-        )
-
-        if (!isCorrectPassword) {
-          return null
-        }
-
-        console.log(credentials)
-
-        return user
       },
     }),
     GoogleProvider({

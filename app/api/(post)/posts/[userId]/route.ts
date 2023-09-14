@@ -11,9 +11,6 @@ export const GET = async (req: NextRequest) => {
   const take = url.searchParams.get('take')
 
   try {
-    const session = await getAuthSession()
-
-    if (!session) return NextResponse.json('Unauthorized', { status: 401 })
     const posts =
       (await prisma.post.findMany({
         where: {

@@ -1,9 +1,6 @@
 import bcrypt from 'bcrypt'
-import { getServerSession } from 'next-auth'
 import Link from 'next/link'
-import { authOptions } from './api/auth/[...nextauth]/options'
-import prisma from './libs/prismadb'
-import axios from 'axios'
+import prisma from '../../libs/prismadb'
 
 async function createStaticUser() {
   const name = 'Anh Tuan'
@@ -23,16 +20,14 @@ async function createStaticUser() {
 }
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
-
-  // await createStaticUser()
-
   return (
-    <div className="text-white">
-      {JSON.stringify(session)}
+    <div className="dark:text-white">
       <div className="flex gap-8">
         <Link href="/login">
           <button>Login</button>
+        </Link>
+        <Link href="/register">
+          <button>Register</button>
         </Link>
         <Link href="/test">
           <button>Test</button>
