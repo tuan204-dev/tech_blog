@@ -1,6 +1,6 @@
 'use client'
 
-import { ThemeProvider as Provider } from 'next-themes'
+import { ThemeProvider as Provider, useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -13,7 +13,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   if (!mounted) return children
 
   return (
-    <Provider enableSystem={true} attribute="class">
+    <Provider defaultTheme='light' attribute={'class'}>
       {children}
     </Provider>
   )

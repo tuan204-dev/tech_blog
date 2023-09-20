@@ -32,6 +32,9 @@ export default async function Home() {
         <Link href="/test">
           <button>Test</button>
         </Link>
+        <Link href="/admin">
+          <button>Create Post</button>
+        </Link>
       </div>
     </div>
   )

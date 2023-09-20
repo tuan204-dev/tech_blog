@@ -16,8 +16,6 @@ const Avatar: React.FC<AvatarProps> = ({ userId, hasBorder, isLarge }) => {
 
   const { user } = useUser(userId)
 
-  console.log(user)
-
   const handleClick = useCallback(() => {
     if (userId) {
       router.push(`/user/${userId}`)

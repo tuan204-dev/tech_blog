@@ -4,9 +4,11 @@ import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import StyledComponentsRegistry from './contexts/AntdRegistry'
 import Provider from './contexts/AuthContext'
+import ModalProvider from './contexts/ModalContext'
 import ThemeProvider from './contexts/ThemeProvider'
 import './globals.css'
 import Loading from './loading'
+import './css/draculaTheme.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,18 +20,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} scrollbar-hide`}>
+      <body className={`${inter.className} scrollbar-hide relative`}>
         <Suspense fallback={<Loading />}>
           <StyledComponentsRegistry>
             <ThemeProvider>
-              <Provider>
-                <Toaster
-                  toastOptions={{
-                    className: 'dark:bg-gray-800 dark:text-white',
-                  }}
-                />
-                {children}
-              </Provider>
+              <ModalProvider>
+                <Provider>
+                  <Toaster
+                    toastOptions={{
+                      className: 'dark:bg-gray-800 dark:text-white',
+                    }}
+                  />
+                  {children}
+                </Provider>
+              </ModalProvider>
             </ThemeProvider>
           </StyledComponentsRegistry>
         </Suspense>
