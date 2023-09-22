@@ -1,4 +1,4 @@
-import { ModalContext } from '@/app/contexts/ModalContext'
+import { ModalContext } from '@/contexts/ModalContext'
 import { useContext } from 'react'
 import { HiEye } from 'react-icons/hi'
 

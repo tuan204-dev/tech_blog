@@ -1,5 +1,5 @@
 import { getSessionOrUnauthorized } from '@/app/api/auth/[...nextauth]/options'
-import prisma from '@/app/libs/prismadb'
+import prisma from '@/libs/prismadb'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const DELETE = async (req: NextRequest) => {

@@ -1,12 +1,12 @@
 import { getSessionOrUnauthorized } from '@/app/api/auth/[...nextauth]/options'
-import prisma from '@/app/libs/prismadb'
+import prisma from '@/libs/prismadb'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const PUT = async (req: NextRequest) => {
   try {
     await getSessionOrUnauthorized()
     const postId = req.url.split('/')[req.url.split('/').length - 2]
-    const { title, body, rawBody, desc } = await req.json()
+    const { title, rawContent, desc } = await req.json()
 
     if (!postId) return NextResponse.json('Invalid post id', { status: 400 })
 
@@ -16,8 +16,7 @@ export const PUT = async (req: NextRequest) => {
       },
       data: {
         title: title ? title : undefined,
-        body: body ? body : undefined,
-        rawBody: rawBody ? rawBody : undefined,
+        rawContent: rawContent ? rawContent : undefined,
         desc: desc ? desc : undefined,
       },
     })

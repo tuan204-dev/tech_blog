@@ -3,7 +3,7 @@ import {
   getSessionOrUnauthorized,
 } from '@/app/api/auth/[...nextauth]/options'
 import type { Session } from 'next-auth'
-import prisma from '@/app/libs/prismadb'
+import prisma from '@/libs/prismadb'
 import { NextRequest, NextResponse } from 'next/server'
 
 //get specific post
@@ -15,12 +15,12 @@ export const GET = async (req: NextRequest) => {
 
     if (!postId) return NextResponse.json('Invalid post id', { status: 400 })
 
-    const post = await prisma.post.findUnique({
+  const post = await prisma.post.findUnique({
       where: {
         id: postId,
         accepted: true,
       },
-    })
+  })
 
     if (!post) return NextResponse.json('Post not found', { status: 404 })
 
@@ -69,7 +69,7 @@ export const PUT = async (req: NextRequest) => {
   try {
     const session = (await getSessionOrUnauthorized()) as Session
 
-    const { postId, title, body, rawBody } = await req.json()
+    const { postId, title, rawContent } = await req.json()
 
     if (!postId) return NextResponse.json('Invalid post id', { status: 400 })
 
@@ -90,8 +90,7 @@ export const PUT = async (req: NextRequest) => {
       },
       data: {
         title,
-        body,
-        rawBody,
+        rawContent,
       },
     })
 

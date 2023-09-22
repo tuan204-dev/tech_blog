@@ -1,7 +1,7 @@
 import { getSessionOrUnauthorized } from '@/app/api/auth/[...nextauth]/options'
 import { NextRequest, NextResponse } from 'next/server'
 import type { Session } from 'next-auth'
-import prisma from '@/app/libs/prismadb'
+import prisma from '@/libs/prismadb'
 
 export const PUT = async (req: NextRequest) => {
   try {

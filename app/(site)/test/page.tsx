@@ -1,15 +1,26 @@
 'use client'
 
-import type { Session } from 'next-auth'
+import {getPostsQuantity} from '@/libs/actions'
+import handleUploadImage from '@/utils/handleUploadImage'
 import axios from 'axios'
 import { signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
-import toast from 'react-hot-toast'
-import { SwapSpinner } from 'react-spinners-kit'
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Test = () => {
   const { data: session } = useSession()
+  const [imageFile, setImageFile] = useState<File | null>(null)
+
+  useEffect(() => {
+    ;(async () => {
+      if (!imageFile) return
+      const url = await handleUploadImage(imageFile as File)
+      console.log(url)
+    })()
+  }, [imageFile])
+
   const createPost = async () => {
     const randomNum = Math.floor(Math.random() * 100)
 
@@ -57,7 +68,7 @@ const Test = () => {
   }
 
   const updateUser = async () => {
-    const name = 'updated name'
+    const name = 'Admin'
     const bio = 'updated bio'
 
     const { data: updatedUser } = await axios.put('/api/currentUser/update', { name })
@@ -110,6 +121,16 @@ const Test = () => {
     })
     toast.success('Reply created successfully')
     console.log(newReply)
+  }
+
+  const getAllPosts = async () => {
+    const { data: posts } = await axios.get('/api/posts?from=1&take=8')
+    console.log(posts)
+  }
+
+  const getQuantity = async () => {
+    const quantity = await getPostsQuantity()
+    console.log(quantity)
   }
 
   const { theme, setTheme } = useTheme()
@@ -201,6 +222,19 @@ const Test = () => {
         >
           Toggle theme
         </button>
+        <button
+          onClick={getAllPosts}
+          className="px-4 py-2 rounded-lg bg-gray-600 text-white"
+        >
+          Get All Posts
+        </button>
+        <button
+          onClick={getQuantity}
+          className="px-4 py-2 rounded-lg bg-gray-600 text-white"
+        >
+          Get Posts Quantity
+        </button>
+        <input type="file" onChange={(e) => setImageFile(e.target.files?.[0] || null)} />
       </div>
     </div>
   )

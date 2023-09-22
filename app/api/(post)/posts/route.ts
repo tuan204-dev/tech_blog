@@ -1,4 +1,4 @@
-import prisma from '@/app/libs/prismadb'
+import prisma from '@/libs/prismadb'
 import { NextRequest, NextResponse } from 'next/server'
 
 //get all posts (from, take)
@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
   try {
     const posts = await prisma.post.findMany({
       where: {
-        accepted: false,
+        accepted: true,
         // accepted: true, in production
       },
       include: {

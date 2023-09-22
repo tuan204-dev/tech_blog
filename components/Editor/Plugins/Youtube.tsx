@@ -1,9 +1,12 @@
 import { TbBrandYoutubeFilled } from 'react-icons/tb'
 
 const YoutubePlugin = (props: any) => {
-
   const handleClick = () => {
-    props.editor.insertText('\n<Youtube id=""/>')
+    console.log(
+      Object.getOwnPropertyNames(props.editor).filter(
+        (item) => typeof props.editor[item] === 'function'
+      )
+    )
   }
 
   return (
