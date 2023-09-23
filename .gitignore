@@ -38,4 +38,4 @@ next-env.d.ts
 
 # Firebase
 
-envVars.ts
+# envVars.ts

@@ -7,6 +7,7 @@ import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { useContext, useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import MDXRender from '../MDXRender'
+import './Modal.scss'
 
 const PreviewModal: React.FC = () => {
   const { mdValue, title } = useContext(EditorContext)
@@ -30,7 +31,7 @@ const PreviewModal: React.FC = () => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full h-full rounded-3xl relative py-6 overflow-hidden"
+        className="bg-white dark:bg-dark-base w-full h-full rounded-3xl relative py-6 overflow-hidden modal-body"
       >
         <button
           onClick={() => setPrevOpen(false)}
@@ -43,7 +44,7 @@ const PreviewModal: React.FC = () => {
         <div className="overflow-hidden overflow-y-scroll scrollbar-hide h-full">
           <div className="pt-10">
             <div className="flex flex-col justify-center">
-              <h1 className="text-[44px] font-bold px-24 mb-6 text-slate-800 text-center">
+              <h1 className="text-[44px] font-bold px-24 mb-6 text-slate-800 dark:text-white text-center">
                 {title || 'Article Preview'}
               </h1>
               <div className="h-[2px] w-[calc(100%-120px)] bg-slate-300 mx-auto mb-5"></div>

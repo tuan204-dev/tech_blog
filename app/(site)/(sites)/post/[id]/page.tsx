@@ -1,9 +1,9 @@
 import Author from '@/components/Author'
+import mdxComponents from '@/components/MDXComponents'
 import { getPostById } from '@/libs/actions'
 import { format } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import rehypeHighlight from 'rehype-highlight'
-import { Youtube } from './../../../../../components/MDXEmbed'
 
 export async function generateMetadata({ params }: { params: any }) {
   const postId = params.id
@@ -43,7 +43,7 @@ export default async function Post({ params }: { params: any }) {
         <main className="prose dark:prose-invert mt-11 md:mt-12 max-w-[100%]">
           <div>
             <MDXRemote
-              components={{ Youtube }}
+              components={mdxComponents}
               source={post?.rawContent.replace(/\\n/g, '\\')}
               options={{
                 mdxOptions: {
