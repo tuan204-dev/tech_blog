@@ -21,6 +21,10 @@ const config: Config = {
     },
   },
   darkMode: ['class'],
-  plugins: [require('tailwind-scrollbar-hide'), require('@tailwindcss/typography')],
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp'),
+  ],
 }
 export default config

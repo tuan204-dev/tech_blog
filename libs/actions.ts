@@ -47,3 +47,57 @@ export async function getUserById({ id }: { id: string }) {
     return null
   }
 }
+
+export async function createPost({
+  title,
+  desc,
+  rawContent,
+  thumbnail,
+}: {
+  title: string
+  desc: string
+  rawContent: string
+  thumbnail: string
+}) {
+  try {
+    const URL = getURL(`/api/post`)
+    const { data: newPost } = await axios.post(URL, {
+      title,
+      desc,
+      rawContent,
+      thumbnail,
+    })
+    return newPost
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export async function updatePost({
+  postId,
+  title,
+  desc,
+  rawContent,
+  thumbnail,
+}: {
+  postId: string
+  title: string
+  desc: string
+  rawContent: string
+  thumbnail: string
+}) {
+  try {
+    const URL = getURL(`/api/post/${postId}/update`)
+    const { data: updatedPost } = await axios.put(URL, {
+      title,
+      desc,
+      rawContent,
+      thumbnail,
+    })
+    return updatedPost
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}

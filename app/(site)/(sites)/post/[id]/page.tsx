@@ -1,10 +1,9 @@
+import Author from '@/components/Author'
 import { getPostById } from '@/libs/actions'
-import getSerialize from '@/utils/getSerialize'
 import { format } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import rehypeHighlight from 'rehype-highlight'
 import { Youtube } from './../../../../../components/MDXEmbed'
-import Author from '@/components/Author'
 
 export async function generateMetadata({ params }: { params: any }) {
   const postId = params.id
@@ -25,10 +24,10 @@ export default async function Post({ params }: { params: any }) {
   const post = await getPostById({ postId })
 
   return (
-    <article className="py-10 overflow-hidden">
-      <div className="mx-auto p-5 flex flex-col w-full max-w-[650px] items-center">
-        <header className="flex flex-col w-full">
-          <h1 className="text-black dark:text-white text-5xl font-extrabold leading-9">
+    <article className="py-10 overflow-hidden min-w-[350px]">
+      <div className="mx-auto flex flex-col items-center w-full max-w-[1200px] px-6 md:px-7 lg:px-8">
+        <header className="flex flex-col w-full px-4 md:px-6 lg:px-10">
+          <h1 className="text-slate-800 dark:text-white text-5xl font-extrabold leading-snug">
             {post?.title}
           </h1>
           <span className="text-[#191919] dark:text-[#f8f9fa] text-base leading-4 mt-11">

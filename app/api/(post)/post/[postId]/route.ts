@@ -15,12 +15,12 @@ export const GET = async (req: NextRequest) => {
 
     if (!postId) return NextResponse.json('Invalid post id', { status: 400 })
 
-  const post = await prisma.post.findUnique({
+    const post = await prisma.post.findUnique({
       where: {
         id: postId,
         accepted: true,
       },
-  })
+    })
 
     if (!post) return NextResponse.json('Post not found', { status: 404 })
 
@@ -68,10 +68,9 @@ export const DELETE = async (req: NextRequest) => {
 export const PUT = async (req: NextRequest) => {
   try {
     const session = (await getSessionOrUnauthorized()) as Session
+    const postId = req.url.split('/')[req.url.split('/').length - 1]
 
-    const { postId, title, rawContent } = await req.json()
-
-    if (!postId) return NextResponse.json('Invalid post id', { status: 400 })
+    const { title, rawContent, desc } = await req.json()
 
     const post = await prisma.post.findUnique({
       where: {
@@ -91,6 +90,7 @@ export const PUT = async (req: NextRequest) => {
       data: {
         title,
         rawContent,
+        desc,
       },
     })
 

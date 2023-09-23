@@ -9,6 +9,8 @@ import 'react-markdown-editor-lite/lib/index.css'
 import './Editor.scss'
 import Preview from './Plugins/Preview'
 import YoutubePlugin from './Plugins/Youtube'
+import HorizontalRulePlugin from './Plugins/HorizontalRule'
+import CenterPlugin from './Plugins/Center'
 
 interface EditorProps {
   value: string
@@ -31,12 +33,14 @@ const plugins = [
   'list-ordered',
   'divider',
   'block-wrap',
+  'HorizontalRule',
   'block-quote',
   'block-code-inline',
   'block-code-block',
   'divider',
   // 'table',
   // 'divider',
+  'Center',
   'link',
   'image',
   'Youtube',
@@ -47,7 +51,9 @@ const plugins = [
 ]
 
 MdEditor.use(YoutubePlugin)
+MdEditor.use(HorizontalRulePlugin)
 MdEditor.use(Preview)
+MdEditor.use(CenterPlugin)
 
 const Editor: React.FC<EditorProps> = ({
   value,
@@ -65,8 +71,6 @@ const Editor: React.FC<EditorProps> = ({
 
   const thumbInput = useRef<HTMLInputElement>(null)
   const imgInput = useRef<HTMLInputElement>(null)
-
-
 
   useEffect(() => {
     ;(async () => {
@@ -111,17 +115,15 @@ const Editor: React.FC<EditorProps> = ({
           <div className="sm:top-[40px] flex flex-col pb-3 flex-1">
             <textarea
               placeholder="Article title ..."
-              defaultValue={title}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full outline-none placeholder:text-4xl placeholder:text-slate-500 dark:placeholder:text-slate-200 text-4xl font-semibold appearance-none bg-white dark:bg-dark-base h-12 resize-none mb-7"
             />
             <textarea
               onChange={(e) => setDesc(e.target.value)}
-              defaultValue={desc}
               value={desc}
               placeholder="Article description ..."
-              className="w-full outline-none placeholder:text-2xl placeholder:text-slate-500 dark:placeholder:text-slate-200 text-2xl font-normal appearance-none bg-white dark:bg-dark-base h-12 resize-none"
+              className="w-full outline-none placeholder:text-xl placeholder:text-slate-500 dark:placeholder:text-slate-200 text-xl font-normal appearance-none bg-white dark:bg-dark-base h-12 resize-none"
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -181,7 +183,7 @@ const Editor: React.FC<EditorProps> = ({
             md: true,
             html: false,
           }}
-          placeholder='Write your article here ...'
+          placeholder="Write your article here ..."
         />
       </div>
     </div>

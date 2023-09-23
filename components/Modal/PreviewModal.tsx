@@ -24,8 +24,14 @@ const PreviewModal: React.FC = () => {
   }, [mdValue])
 
   return (
-    <div className="fixed top-0 right-0 left-0 h-[max(100vh,1000px)] z-[999999] bg-gray-500/20 px-4 sm:px-6 md:px-8 lg:px-16 py-10 overflow-hidden">
-      <div className="bg-white w-full h-full rounded-3xl relative py-6 overflow-hidden">
+    <div
+      onClick={() => setPrevOpen(false)}
+      className="fixed top-0 right-0 left-0 h-[max(100vh,1000px)] z-[999999] bg-gray-500/20 px-4 sm:px-6 md:px-8 lg:px-16 py-10 overflow-hidden"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white w-full h-full rounded-3xl relative py-6 overflow-hidden"
+      >
         <button
           onClick={() => setPrevOpen(false)}
           className="absolute z-40 top-4 right-4 p-[6px] hover:bg-slate-200 rounded-full transition"
