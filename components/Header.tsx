@@ -5,12 +5,12 @@ import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useCallback, useContext, useState } from 'react'
 import { FiMoon, FiSearch, FiSun } from 'react-icons/fi'
-import Avatar from './Avatar'
 import { MdOutlineCloudUpload } from 'react-icons/md'
-import { usePathname } from 'next/navigation'
 import { EditorContext } from '../contexts/EditorContext'
+import Avatar from './Avatar'
 
 const Header = () => {
   const { theme, systemTheme, setTheme } = useTheme()
@@ -55,7 +55,7 @@ const Header = () => {
           alt="blog logo"
         />
       </Link>
-      <div className="absolute right-0 left-0 justify-center  hidden md:flex">
+      <div className="absolute right-0 left-0 justify-center flex md:hidden">
         <form className="flex items-center w-80 h-10 rounded-full bg-[#f0f2f5] dark:bg-[#3a3b3c] text-[#65676b] dark:text-[#b0b3b8] transition">
           <span className="pl-3">
             <FiSearch />
@@ -68,12 +68,12 @@ const Header = () => {
         </form>
       </div>
       <div className="flex items-center relative z-10">
-        <button className="flex items-center mr-6 md:hidden">
+        <button className="hidden md:flex items-center mr-6 ">
           <span className="">
             <FiSearch />
           </span>
         </button>
-        <button className="lg:ml-8 mr-6" onClick={toggleTheme}>
+        <button className="mr-8" onClick={toggleTheme}>
           <div className="text-xl dark:text-white outline-none">
             {isDarkMode ? <FiMoon /> : <FiSun />}
           </div>
@@ -92,7 +92,7 @@ const Header = () => {
             <span className="text-2xl font-bold">
               <MdOutlineCloudUpload />
             </span>
-            <span className="hidden md:block ml-2 font-semibold">
+            <span className="block md:hidden ml-2 font-semibold">
               {editPostRegex.test(pathname) ? 'Update' : 'Post'}
             </span>
           </button>

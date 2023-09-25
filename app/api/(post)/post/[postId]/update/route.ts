@@ -6,7 +6,7 @@ export const PUT = async (req: NextRequest) => {
   try {
     await getSessionOrUnauthorized()
     const postId = req.url.split('/')[req.url.split('/').length - 2]
-    const { title, rawContent, desc, thumbnail } = await req.json()
+    const { title, rawContent, desc, thumbnail, htmlContent } = await req.json()
 
     if (!postId) return NextResponse.json('Invalid post id', { status: 400 })
 
@@ -19,6 +19,7 @@ export const PUT = async (req: NextRequest) => {
         rawContent: rawContent ? rawContent : undefined,
         desc: desc ? desc : undefined,
         thumbnail: thumbnail ? thumbnail : undefined,
+        htmlContent: htmlContent ? htmlContent : undefined,
       },
     })
 

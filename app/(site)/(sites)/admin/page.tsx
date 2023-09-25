@@ -2,6 +2,8 @@
 
 import Editor from '@/components/Editor/Editor'
 import { EditorContext } from '@/contexts/EditorContext'
+import useCurrentUser from '@/hooks/useCurrentUser'
+import { useRouter } from 'next/navigation'
 import { useContext, useEffect } from 'react'
 
 const Admin: React.FC = () => {
@@ -15,10 +17,19 @@ const Admin: React.FC = () => {
     setThumbUrl,
     clearContent,
   } = useContext(EditorContext)
+  const router = useRouter()
+
+  const { currentUser, isLoading } = useCurrentUser()
 
   useEffect(() => {
-    clearContent()
-  }, [])
+    if (!isLoading) {
+      if (!currentUser) {
+        router.push('/')
+      } else {
+        clearContent()
+      }
+    }
+  }, [isLoading, currentUser])
 
   return (
     <div className="flex flex-col h-[calc(100vh-70px)] min-w-[450px]">

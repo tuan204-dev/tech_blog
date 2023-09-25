@@ -53,11 +53,13 @@ export async function createPost({
   desc,
   rawContent,
   thumbnail,
+  htmlContent,
 }: {
   title: string
   desc: string
   rawContent: string
   thumbnail: string
+  htmlContent: string
 }) {
   try {
     const URL = getURL(`/api/post`)
@@ -66,6 +68,7 @@ export async function createPost({
       desc,
       rawContent,
       thumbnail,
+      htmlContent,
     })
     return newPost
   } catch (error) {
@@ -80,12 +83,14 @@ export async function updatePost({
   desc,
   rawContent,
   thumbnail,
+  htmlContent,
 }: {
   postId: string
   title: string
   desc: string
   rawContent: string
   thumbnail: string
+  htmlContent: string
 }) {
   try {
     const URL = getURL(`/api/post/${postId}/update`)
@@ -94,6 +99,7 @@ export async function updatePost({
       desc,
       rawContent,
       thumbnail,
+      htmlContent,
     })
     return updatedPost
   } catch (error) {

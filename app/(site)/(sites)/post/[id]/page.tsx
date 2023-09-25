@@ -1,9 +1,9 @@
+import { getAuthSession } from '@/app/api/auth/[...nextauth]/options'
 import Author from '@/components/Author'
-import mdxComponents from '@/components/MDXComponents'
 import { getPostById } from '@/libs/actions'
 import { format } from 'date-fns'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import rehypeHighlight from 'rehype-highlight'
+import Link from 'next/link'
+import { AiOutlineEdit } from 'react-icons/ai'
 
 export async function generateMetadata({ params }: { params: any }) {
   const postId = params.id
@@ -21,38 +21,42 @@ export async function generateMetadata({ params }: { params: any }) {
 export default async function Post({ params }: { params: any }) {
   const postId = params.id
 
+  const session = await getAuthSession()
+
   const post = await getPostById({ postId })
 
   return (
     <article className="py-10 overflow-hidden min-w-[350px]">
-      <div className="mx-auto flex flex-col items-center w-full max-w-[1200px] px-6 md:px-7 lg:px-8">
-        <header className="flex flex-col w-full px-4 md:px-6 lg:px-10">
+      <div className="mx-auto flex flex-col items-center w-full max-w-[1200px] px-8 lg:px-7 md:px-6">
+        <header className="flex flex-col w-full px-20 lg:px-10 md:px-8">
           <h1 className="text-slate-800 dark:text-white text-5xl font-extrabold leading-snug">
             {post?.title}
           </h1>
-          <span className="text-[#191919] dark:text-[#f8f9fa] text-base leading-4 mt-11">
+          <span className="text-[#3f3f3f] dark:text-[#f8f9fa] leading-snug mt-11 text-xl">
             {post?.desc}
           </span>
-          <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-5">
-            {format(new Date(post!.createdAt), 'PP')}
+          <div className="mt-8 lg:mt-6 flex flex-col">
+            <div className="flex justify-between items-center">
+              <Author userId={post?.userId} />
+              
+              {session?.user?.id === post?.userId && (
+                <Link href={`/post/${postId}/edit`}>
+                  <button className="w-fit px-3 py-2 flex items-center rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition mr-7">
+                    <span className="text-2xl font-bold">
+                      <AiOutlineEdit />
+                    </span>
+                    <span className="block md:hidden ml-2 font-semibold">Edit</span>
+                  </button>
+                </Link>
+              )}
+            </div>
+            <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-8">
+            Last updated: {format(new Date(post!.updatedAt), 'PP')}
           </time>
-          <div className='mt-11 md:mt-12'>
-            <Author userId={post?.userId} />
           </div>
         </header>
-        <main className="prose dark:prose-invert mt-11 md:mt-12 max-w-[100%]">
-          <div>
-            <MDXRemote
-              components={mdxComponents}
-              source={post?.rawContent.replace(/\\n/g, '\\')}
-              options={{
-                mdxOptions: {
-                  rehypePlugins: [rehypeHighlight as any],
-                  development: true,
-                },
-              }}
-            />
-          </div>
+        <main className="prose dark:prose-invert mt-12 md:mt-10 w-full max-w-[100%]">
+          <div dangerouslySetInnerHTML={{ __html: post?.htmlContent }}></div>
         </main>
       </div>
     </article>

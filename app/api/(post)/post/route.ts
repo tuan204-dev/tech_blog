@@ -7,7 +7,7 @@ import { getSessionOrUnauthorized } from '../../auth/[...nextauth]/options'
 export const POST = async (req: NextRequest) => {
   try {
     const session = (await getSessionOrUnauthorized()) as Session
-    const { title, rawContent, desc, thumbnail } = await req.json()
+    const { title, rawContent, desc, thumbnail, htmlContent } = await req.json()
 
     const post = await prisma.post.create({
       data: {
@@ -15,6 +15,7 @@ export const POST = async (req: NextRequest) => {
         rawContent,
         desc,
         thumbnail,
+        htmlContent,
         userId: session.user.id,
       },
     })

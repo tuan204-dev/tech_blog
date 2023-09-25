@@ -110,7 +110,7 @@ const Editor: React.FC<EditorProps> = ({
         theme === 'dark' ? 'dark-editor' : ''
       }`}
     >
-      <div className="px-5 w-full relative max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] flex flex-col">
+      <div className="px-5 w-full relative sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] max-w-[1200px] flex flex-col">
         <div className="flex justify-between pt-10 px-6">
           <div className="sm:top-[40px] flex flex-col pb-3 flex-1">
             <textarea
@@ -134,7 +134,7 @@ const Editor: React.FC<EditorProps> = ({
               <span className="text-2xl ">
                 <MdOutlinePhotoSizeSelectActual />
               </span>
-              <span className="hidden md:block ml-2">Add thumbnail</span>
+              <span className="block md:hidden ml-2">Add thumbnail</span>
             </button>
             <button
               onClick={() => imgInput.current?.click()}
@@ -143,20 +143,20 @@ const Editor: React.FC<EditorProps> = ({
               <span className="text-2xl ">
                 <MdOutlineCloudUpload />
               </span>
-              <span className="hidden md:block ml-2">Upload image</span>
+              <span className="block md:hidden ml-2">Upload image</span>
             </button>
 
             <input
               type="file"
               id="thumbnailImage"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, , image/avif, image/gif"
               ref={thumbInput}
               className="hidden"
               onChange={(e) => setThumbFile(e.target.files?.[0] || null)}
             />
             <input
               type="file"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, , image/avif, image/gif"
               id="image"
               ref={imgInput}
               className="hidden"

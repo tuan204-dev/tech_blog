@@ -13,15 +13,15 @@ export default function PostItem({
 }: PostItemProps) {
   return (
     <Link href={`/post/${id}`}>
-      <article className="w-72 h-[340px] p-4 rounded-2xl shadow-lg bg-[#f5f8fc]">
+      <article className="w-72 h-[340px] p-4 rounded-2xl shadow-lg bg-[#f5f8fc] flex flex-col justify-between">
         <div className="flex flex-col px-4">
-          <h2 className="text-black dark:text-white text-2xl font-extrabold leading-9 line-clamp-2">
+          <h2 className="text-black dark:text-white text-2xl font-extrabold leading-7 line-clamp-2">
             {title}
           </h2>
-          <span className="text-[#191919] dark:text-[#f8f9fa] text-base leading-4 mt-4">
+          <span className="text-[#191919] dark:text-[#f8f9fa] text-base leading-snug mt-4 line-clamp-2">
             {desc}
           </span>
-          <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-2 line-clamp-3">
+          <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-2 ">
             {format(new Date(createdAt), 'PP')}
           </time>
         </div>
