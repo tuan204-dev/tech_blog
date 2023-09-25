@@ -26,13 +26,13 @@ const EditPost = ({ params }: { params: { id: string } }) => {
     ;(async () => {
       if (!isLoading && currentUser) {
         const post = await getPostById({ postId: params.id })
-        if(currentUser?.id !== post?.userId) {
+        if (currentUser?.id !== post?.userId) {
           return router.push('/')
         }
-        setTitle(post.title)
-        setDesc(post.desc)
-        setThumbUrl(post.thumbnail)
-        setMdValue(post.rawContent)
+        setTitle(post!.title)
+        setDesc(post!.desc || '')
+        setThumbUrl(post!.thumbnail)
+        setMdValue(post!.rawContent)
       }
     })()
   }, [

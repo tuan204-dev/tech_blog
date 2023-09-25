@@ -13,7 +13,7 @@ export default function PostItem({
 }: PostItemProps) {
   return (
     <Link href={`/post/${id}`}>
-      <article className="w-72 h-[340px] p-4 rounded-2xl shadow-lg bg-[#f5f8fc] flex flex-col justify-between">
+      <article className="w-80 h-[360px] p-4 rounded-2xl shadow-lg bg-[#f5f8fc] dark:bg-[#1c1f26] flex flex-col justify-between">
         <div className="flex flex-col px-4">
           <h2 className="text-black dark:text-white text-2xl font-extrabold leading-7 line-clamp-2">
             {title}
@@ -25,13 +25,13 @@ export default function PostItem({
             {format(new Date(createdAt), 'PP')}
           </time>
         </div>
-        <div className="overflow-hidden rounded-xl my-4 shadow-sm">
+        <div className="overflow-hidden h-40 rounded-xl my-4 shadow-sm w-fit">
           <Image
             src={thumbnail}
             width={320}
             height={160}
             alt={title}
-            style={{ objectFit: 'contain', width: '100%', height: '160px' }}
+            style={{ objectFit: 'contain', height: '100%', objectPosition: 'center', borderRadius: '12px'}}
           />
         </div>
       </article>

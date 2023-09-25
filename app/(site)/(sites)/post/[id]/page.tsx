@@ -37,8 +37,8 @@ export default async function Post({ params }: { params: any }) {
           </span>
           <div className="mt-8 lg:mt-6 flex flex-col">
             <div className="flex justify-between items-center">
-              <Author userId={post?.userId} />
-              
+              <Author userId={post?.userId as string} />
+
               {session?.user?.id === post?.userId && (
                 <Link href={`/post/${postId}/edit`}>
                   <button className="w-fit px-3 py-2 flex items-center rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition mr-7">
@@ -51,12 +51,12 @@ export default async function Post({ params }: { params: any }) {
               )}
             </div>
             <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-8">
-            Last updated: {format(new Date(post!.updatedAt), 'PP')}
-          </time>
+              Last updated: {format(new Date(post!.updatedAt), 'PP')}
+            </time>
           </div>
         </header>
         <main className="prose dark:prose-invert mt-12 md:mt-10 w-full max-w-[100%]">
-          <div dangerouslySetInnerHTML={{ __html: post?.htmlContent }}></div>
+          <div dangerouslySetInnerHTML={{ __html: post?.htmlContent as string }}></div>
         </main>
       </div>
     </article>

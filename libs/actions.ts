@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { postsPerPage } from '../constants'
 import getURL from '../utils/getURL'
+import { Post, User } from '@prisma/client'
 
-export async function getPosts({ page }: { page: number }) {
+export async function getPosts({ page }: { page: number }): Promise<Post[]> {
   try {
     const from = 1 + (page - 1) * postsPerPage
     const take = postsPerPage
@@ -15,7 +16,7 @@ export async function getPosts({ page }: { page: number }) {
   }
 }
 
-export async function getPostById({ postId }: { postId: string }) {
+export async function getPostById({ postId }: { postId: string }): Promise<Post | null> {
   try {
     const URL = getURL(`/api/post/${postId}`)
     const { data: post } = await axios.get(`${URL}`)
@@ -26,7 +27,7 @@ export async function getPostById({ postId }: { postId: string }) {
   }
 }
 
-export async function getPostsQuantity() {
+export async function getPostsQuantity(): Promise<number> {
   try {
     const URL = getURL(`/api/posts/quantity`)
     const { data: quantity } = (await axios.get(`${URL}`)) || 0
@@ -37,10 +38,24 @@ export async function getPostsQuantity() {
   }
 }
 
-export async function getUserById({ id }: { id: string }) {
+export async function getUserById({ id }: { id: string }): Promise<User | null> {
   try {
     const URL = getURL(`/api/user/${id}`)
     const { data: user } = await axios.get(`${URL}`)
+    return user
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export async function getUserByUsername({
+  username,
+}: {
+  username: string
+}): Promise<User | null> {
+  try {
+    const { data: user } = await axios.get(`/api/user/find/${username}`)
     return user
   } catch (error) {
     console.log(error)
@@ -60,7 +75,7 @@ export async function createPost({
   rawContent: string
   thumbnail: string
   htmlContent: string
-}) {
+}): Promise<Post | null> {
   try {
     const URL = getURL(`/api/post`)
     const { data: newPost } = await axios.post(URL, {
@@ -91,7 +106,7 @@ export async function updatePost({
   rawContent: string
   thumbnail: string
   htmlContent: string
-}) {
+}): Promise<Post | null> {
   try {
     const URL = getURL(`/api/post/${postId}/update`)
     const { data: updatedPost } = await axios.put(URL, {
@@ -105,5 +120,28 @@ export async function updatePost({
   } catch (error) {
     console.log(error)
     return null
+  }
+}
+
+export async function updateCurrentUser({
+  avatarUrl,
+  fullName,
+  username,
+  bio,
+}: {
+  avatarUrl: string
+  fullName: string
+  username: string
+  bio: string
+}) {
+  try {
+    await axios.put('/api/currentUser/update', {
+      name: fullName,
+      username,
+      bio,
+      profileImage: avatarUrl
+    })
+  } catch (error) {
+    console.log(error)
   }
 }
