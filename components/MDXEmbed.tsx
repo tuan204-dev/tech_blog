@@ -7,15 +7,16 @@ interface YoutubeProps {
 export const Youtube: React.FC<YoutubeProps> = ({ id }) => {
   let searchId: string = id
 
-  console.log(isUrl(id))
-
   if (isUrl(id)) {
     searchId = new URL(id).searchParams.get('v')!
   }
 
   return (
-    <div className='w-full aspect-video px-6 py-3'>
-      <iframe className='h-full w-full' src={`https://www.youtube.com/embed/${searchId}`}></iframe>
+    <div className="w-full aspect-video px-6 py-3">
+      <iframe
+        className="h-full w-full"
+        src={`https://www.youtube.com/embed/${searchId}`}
+      ></iframe>
     </div>
   )
 }

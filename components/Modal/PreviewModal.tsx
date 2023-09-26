@@ -19,7 +19,6 @@ const PreviewModal: React.FC = () => {
     ;(async () => {
       if (!mdValue) return
       const mdxValue = await getSerialize({ mdValue })
-      console.log(mdxValue)
       setPreviewValue(mdxValue)
     })()
   }, [mdValue])

@@ -48,7 +48,7 @@ export default function EditorProvider({ children }: { children: React.ReactNode
         htmlContent,
       })
 
-      router.push(`/post/${newPost.id}`)
+      router.push(`/post/${newPost!.id}`)
       toast.success('Posted article!')
     } catch (error) {
       toast.error('Error posting article!')

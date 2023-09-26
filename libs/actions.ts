@@ -55,7 +55,17 @@ export async function getUserByUsername({
   username: string
 }): Promise<User | null> {
   try {
-    const { data: user } = await axios.get(`/api/user/find/${username}`)
+    const { data: user } = await axios.get(`/api/user/find/username/${username}`)
+    return user
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export async function getUserByEmail({ email }: { email: string }): Promise<User | null> {
+  try {
+    const { data: user } = await axios.get(`/api/user/find/email/${email}`)
     return user
   } catch (error) {
     console.log(error)
@@ -123,6 +133,32 @@ export async function updatePost({
   }
 }
 
+export async function createAccountWithCredentials({
+  email,
+  password,
+  name,
+  username,
+}: {
+  email: string
+  password: string
+  name: string
+  username: string
+}): Promise<User | null> {
+  try {
+    const URL = getURL('/api/register')
+    const { data: newAccount } = await axios.post(URL, {
+      email,
+      password,
+      name,
+      username,
+    })
+    return newAccount
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
 export async function updateCurrentUser({
   avatarUrl,
   fullName,
@@ -139,7 +175,7 @@ export async function updateCurrentUser({
       name: fullName,
       username,
       bio,
-      profileImage: avatarUrl
+      profileImage: avatarUrl,
     })
   } catch (error) {
     console.log(error)

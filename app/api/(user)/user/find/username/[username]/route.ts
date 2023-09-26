@@ -13,7 +13,6 @@ export const GET = async (req: NextRequest) => {
       },
     })
 
-    console.log(user)
     return NextResponse.json(user)
   } catch (error) {
     console.log(error)

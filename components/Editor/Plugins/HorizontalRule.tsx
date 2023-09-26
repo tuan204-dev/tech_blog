@@ -1,7 +1,6 @@
 const HorizontalRulePlugin = (props: any) => {
   const handleClick = () => {
     props.editor.insertText(`***`)
-    console.log(props.editor)
   }
 
   return (

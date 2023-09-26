@@ -1,4 +1,5 @@
 import { getUserById } from '@/libs/actions'
+import { User } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,7 +8,7 @@ interface AuthorProps {
 }
 
 const Author: React.FC<AuthorProps> = async ({ userId }) => {
-  const author = await getUserById({ id: userId })
+  const author = (await getUserById({ id: userId })) as User
 
   const { name, username, profileImage, image } = author
 
@@ -15,8 +16,8 @@ const Author: React.FC<AuthorProps> = async ({ userId }) => {
     <div className="flex flex-row gap-4">
       <Link href={`/user/${userId}`}>
         <Image
-          src={profileImage || image}
-          alt={name}
+          src={profileImage || image || '/images/placeholder.jpg'}
+          alt={name || 'Author'}
           width={60}
           height={60}
           style={{ objectFit: 'cover', borderRadius: '9999px' }}
@@ -29,7 +30,11 @@ const Author: React.FC<AuthorProps> = async ({ userId }) => {
         >
           {name}
         </Link>
-        {username && <span>@{username}</span>}
+        {username && (
+          <span className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-1">
+            @{username}
+          </span>
+        )}
       </div>
     </div>
   )

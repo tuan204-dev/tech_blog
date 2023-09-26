@@ -20,6 +20,8 @@ const Account: React.FC = () => {
   const [bio, setBio] = useState<string>()
   const [usernameExisted, setUsernameExisted] = useState<boolean>(false)
 
+  const [isChanging, setChanging] = useState<boolean>(false)
+
   const { mutate } = useCurrentUser()
 
   const router = useRouter()
@@ -75,6 +77,7 @@ const Account: React.FC = () => {
   }, [avatarFile])
 
   const handleSubmit = async () => {
+    setChanging(true)
     await updateCurrentUser({
       avatarUrl,
       fullName: fullName as string,
@@ -82,6 +85,7 @@ const Account: React.FC = () => {
       bio: bio as string,
     })
     toast.success('Profile saved!')
+    setChanging(false)
     mutate()
     router.push('/')
   }
@@ -188,6 +192,7 @@ const Account: React.FC = () => {
         <div className="flex justify-end p-4">
           <button
             onClick={handleSubmit}
+            disabled={isChanging}
             className="w-fit px-3 py-2 flex items-center rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition"
           >
             Save

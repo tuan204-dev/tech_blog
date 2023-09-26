@@ -17,6 +17,7 @@ const config: Config = {
         'dark-base': '#202124',
         border: '#52586633',
         'dark-border': '#52586633',
+        danger: '#f71a14 !important',
       },
     },
     screens: {

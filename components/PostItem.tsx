@@ -13,7 +13,7 @@ export default function PostItem({
 }: PostItemProps) {
   return (
     <Link href={`/post/${id}`}>
-      <article className="w-80 h-[360px] p-4 rounded-2xl shadow-lg bg-[#f5f8fc] dark:bg-[#1c1f26] flex flex-col justify-between">
+      <article className="w-80 h-[360px] p-4 rounded-2xl shadow-lg bg-[#f5f8fc] dark:bg-[#1c1f26] flex flex-col justify-between hover:scale-[1.05] transition-all">
         <div className="flex flex-col px-4">
           <h2 className="text-black dark:text-white text-2xl font-extrabold leading-7 line-clamp-2">
             {title}
@@ -31,7 +31,12 @@ export default function PostItem({
             width={320}
             height={160}
             alt={title}
-            style={{ objectFit: 'contain', height: '100%', objectPosition: 'center', borderRadius: '12px'}}
+            style={{
+              objectFit: 'contain',
+              height: '100%',
+              objectPosition: 'center',
+              borderRadius: '12px',
+            }}
           />
         </div>
       </article>
