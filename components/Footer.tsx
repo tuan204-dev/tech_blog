@@ -31,7 +31,7 @@ import Link from 'next/link'
 
 const Footer: React.FC = () => {
   return (
-    <footer className="border-t-2 flex flex-col py-8 bg-white dark:bg-[#121212] dark:border-slate-700 px-16 lg:px-10 md:px-8 w-full relative sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] max-w-[1200px] mx-auto">
+    <footer className="border-t-style flex flex-col py-8 bg-white dark:bg-[#121212] px-16 lg:px-10 md:px-8 w-full relative sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] max-w-[1200px] mx-auto">
       <div>
         <div></div>
         <div></div>

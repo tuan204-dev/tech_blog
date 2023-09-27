@@ -46,7 +46,7 @@ const Header = () => {
   )
 
   return (
-    <header className="flex w-full items-center h-[70px] px-8 justify-between shadow-sm relative bg-white dark:bg-dark-base transition">
+    <header className="flex w-full items-center h-[70px] px-8 justify-between relative bg-white dark:bg-dark-base transition border-b-style">
       <Link href="/" className="relative z-10">
         <Image
           src="https://firebasestorage.googleapis.com/v0/b/image-blog-8612c.appspot.com/o/assets%2Flogo.svg?alt=media&token=d2d5a4c9-5bdd-4e59-8f4a-ebf322d76e47"

@@ -20,3 +20,9 @@ interface IPost {
   rawContent: string
   createdAt: string
 }
+
+interface ISidebarItem {
+  icon: string
+  title: string
+  href: string
+}

@@ -38,6 +38,18 @@ export async function getPostsQuantity(): Promise<number> {
   }
 }
 
+export async function getCurrentUser(): Promise<User | null> {
+  try {
+    const URL = getURL('/api/currentUser')
+    const { data: currentUser } = await axios.get(URL)
+
+    return currentUser
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
 export async function getUserById({ id }: { id: string }): Promise<User | null> {
   try {
     const URL = getURL(`/api/user/${id}`)
@@ -177,6 +189,16 @@ export async function updateCurrentUser({
       bio,
       profileImage: avatarUrl,
     })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function toggleMarkPost({ postId }: { postId: string }) {
+  try {
+    const URL = getURL(`/api/post/${postId}/mark`)
+    const { data: updatedUser } = await axios.put(URL)
+    return updatedUser
   } catch (error) {
     console.log(error)
   }

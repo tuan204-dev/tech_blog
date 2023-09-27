@@ -43,6 +43,7 @@ model User {
   hashedPassword  String?
   followingIds    String[]  @db.ObjectId
   followerIds     String[]  @db.ObjectId
+  bookMarkIds     String[]  @db.ObjectId
   hasNotification Boolean?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt

@@ -40,6 +40,7 @@ export default function EditorProvider({ children }: { children: React.ReactNode
       if (!thumbUrl) return toast.error('Please upload thumbnail!')
       const mdxContent = await getSerialize({ mdValue })
       const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
+
       const newPost = await createPost({
         title: title.trim(),
         desc: desc.trim(),
@@ -59,6 +60,7 @@ export default function EditorProvider({ children }: { children: React.ReactNode
     try {
       const mdxContent = await getSerialize({ mdValue })
       const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
+
       await updatePost({
         postId,
         title: title.trim(),
