@@ -1,9 +1,8 @@
 import {
-  getAuthSession,
-  getSessionOrUnauthorized,
+  getSessionOrUnauthorized
 } from '@/app/api/auth/[...nextauth]/options'
-import type { Session } from 'next-auth'
 import prisma from '@/libs/prismadb'
+import type { Session } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 //get specific post

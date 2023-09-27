@@ -78,7 +78,7 @@ const Header = () => {
             {isDarkMode ? <FiMoon /> : <FiSun />}
           </div>
         </button>
-        {(pathname === '/admin' || editPostRegex.test(pathname)) && (
+        {(pathname === '/create' || editPostRegex.test(pathname)) && (
           <button
             onClick={() => {
               editPostRegex.test(pathname)

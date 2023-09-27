@@ -15,24 +15,43 @@ export const PUT = async (req: NextRequest) => {
       },
     })
 
-    const bookMarkIds = currentUser?.bookMarkIds || []
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+    })
+
+    let userBookmarked = [...(post?.bookmarkedIds || [])]
+
+    const bookMarkIds = currentUser?.bookmarkedIds || []
 
     const isMarked = bookMarkIds.includes(postId)
 
-    const updatedBookMarkIds = [...bookMarkIds]
+    let updatedBookMarkIds = [...bookMarkIds]
 
     if (isMarked) {
-      updatedBookMarkIds.filter((id) => id !== postId)
+      updatedBookMarkIds = updatedBookMarkIds.filter((id) => id !== postId)
+      userBookmarked = userBookmarked.filter((id) => id !== currentUserId)
     } else {
       updatedBookMarkIds.push(postId)
+      userBookmarked.push(currentUserId)
     }
+
+    await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        bookmarkedIds: [...userBookmarked],
+      },
+    })
 
     const updatedUser = await prisma.user.update({
       where: {
         id: currentUserId,
       },
       data: {
-        bookMarkIds: [...updatedBookMarkIds],
+        bookmarkedIds: [...updatedBookMarkIds],
       },
     })
 

@@ -3,7 +3,7 @@ import type { Session } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { getSessionOrUnauthorized } from '../../auth/[...nextauth]/options'
 
-const minify = require('html-minifier').minify
+// const minify = require('html-minifier').minify
 
 //create new post
 export const POST = async (req: NextRequest) => {
@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
         rawContent,
         desc,
         thumbnail,
-        htmlContent: minify(htmlContent),
+        htmlContent,
         userId: session.user.id,
       },
     })

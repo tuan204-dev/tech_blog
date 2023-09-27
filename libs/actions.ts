@@ -203,3 +203,15 @@ export async function toggleMarkPost({ postId }: { postId: string }) {
     console.log(error)
   }
 }
+
+export async function getMarkedPosts({ userId }: { userId: string }): Promise<Post[]> {
+  try {
+    const URL = getURL(`/api/user/${userId}/markedPost`)
+    const { data: markedPosts } = await axios.get(URL)
+
+    return markedPosts
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}

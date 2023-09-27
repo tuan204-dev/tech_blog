@@ -1,17 +1,16 @@
 'use client'
 
-import Link from 'next/link'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import axios from 'axios'
-import { useSession, signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import {
   createAccountWithCredentials,
   getUserByEmail,
   getUserByUsername,
 } from '@/libs/actions'
+import { signIn, useSession } from 'next-auth/react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 interface Errors {
   username?: boolean

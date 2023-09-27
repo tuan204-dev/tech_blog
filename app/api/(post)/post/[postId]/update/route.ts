@@ -2,7 +2,7 @@ import { getSessionOrUnauthorized } from '@/app/api/auth/[...nextauth]/options'
 import prisma from '@/libs/prismadb'
 import { NextRequest, NextResponse } from 'next/server'
 
-const minify = require('html-minifier').minify;
+// const minify = require('html-minifier').minify;
 
 export const PUT = async (req: NextRequest) => {
   try {
@@ -10,7 +10,7 @@ export const PUT = async (req: NextRequest) => {
     const postId = req.url.split('/')[req.url.split('/').length - 2]
     const { title, rawContent, desc, thumbnail, htmlContent } = await req.json()
 
-    const htmlMinified = minify(htmlContent)
+    // const htmlMinified = minify(htmlContent)
 
     if (!postId) return NextResponse.json('Invalid post id', { status: 400 })
 
@@ -23,7 +23,7 @@ export const PUT = async (req: NextRequest) => {
         rawContent: rawContent ? rawContent : undefined,
         desc: desc ? desc : undefined,
         thumbnail: thumbnail ? thumbnail : undefined,
-        htmlContent: htmlContent ? htmlMinified : undefined,
+        htmlContent: htmlContent ? htmlContent : undefined,
       },
     })
 

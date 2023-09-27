@@ -16,7 +16,7 @@ const BookMarkBtn: React.FC<BookMarkBtnProps> = ({ postId }) => {
 
   useEffect(() => {
     if (!isLoading) {
-      const isMarked = currentUser?.bookMarkIds?.includes(postId)
+      const isMarked = currentUser?.bookmarkedIds?.includes(postId)
       setMarked(isMarked)
     }
   }, [isLoading, currentUser, postId])

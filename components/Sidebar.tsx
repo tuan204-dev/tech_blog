@@ -11,7 +11,7 @@ import SidebarItem from './SidebarItem'
 
 const Sidebar: React.FC = () => {
   const { currentUser } = useCurrentUser()
-  const [isExpanded, setExpanded] = useState<boolean>(true)
+  const [isExpanded, setExpanded] = useState<boolean>(false)
 
   const sidebarItems: ISidebarItem[] = useMemo(
     () => [

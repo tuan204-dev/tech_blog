@@ -69,5 +69,8 @@
     "fs": false,
     "os": false,
     "path": false
+  },
+  "resolutions": {
+    "react-countup/countup.js": "2.5.0"
   }
 }

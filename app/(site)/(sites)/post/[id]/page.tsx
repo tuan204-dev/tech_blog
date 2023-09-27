@@ -1,12 +1,11 @@
+import { getAuthSession } from '@/app/api/auth/[...nextauth]/options'
 import Author from '@/components/Author'
 import BookMarkBtn from '@/components/BookMarkBtn'
 import Footer from '@/components/Footer'
-import { getCurrentUser, getPostById, toggleMarkPost } from '@/libs/actions'
+import { getCurrentUser, getPostById } from '@/libs/actions'
 import { format } from 'date-fns'
 import Link from 'next/link'
-import toast from 'react-hot-toast'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { BsBookmarkPlus, BsBookmarkStarFill } from 'react-icons/bs'
 
 export async function generateMetadata({ params }: { params: any }) {
   const postId = params.id
@@ -23,10 +22,8 @@ export async function generateMetadata({ params }: { params: any }) {
 
 export default async function Post({ params }: { params: any }) {
   const postId = params.id
-
-  const currentUser = await getCurrentUser()
-
-  const isMarked = currentUser?.bookMarkIds?.includes(postId)
+  const session = await getAuthSession()
+  
 
   const post = await getPostById({ postId })
 
@@ -48,7 +45,7 @@ export default async function Post({ params }: { params: any }) {
               <div className="flex justify-between items-center">
                 <Author userId={post?.userId as string} />
 
-                {currentUser?.id === post?.userId && (
+                {session?.user?.id === post?.userId && (
                   <Link href={`/post/${postId}/edit`}>
                     <button className="w-fit px-3 py-2 flex items-center rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition mr-7">
                       <span className="text-2xl font-bold">

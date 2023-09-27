@@ -43,7 +43,7 @@ model User {
   hashedPassword  String?
   followingIds    String[]  @db.ObjectId
   followerIds     String[]  @db.ObjectId
-  bookMarkIds     String[]  @db.ObjectId
+  bookmarkedIds   String[]  @db.ObjectId
   hasNotification Boolean?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -65,17 +65,18 @@ model AdminAccount {
 }
 
 model Post {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String   @db.ObjectId
-  title       String
-  desc        String?
-  thumbnail   String
-  accepted    Boolean  @default(true)
-  rawContent  String
-  htmlContent String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  likedIds    String[] @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  title         String
+  desc          String?
+  thumbnail     String
+  accepted      Boolean  @default(true)
+  rawContent    String
+  htmlContent   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  likedIds      String[] @db.ObjectId
+  bookmarkedIds String[] @db.ObjectId
 
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments Comment[]
