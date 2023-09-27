@@ -8,6 +8,7 @@ export async function getPosts({ page }: { page: number }): Promise<Post[]> {
     const from = 1 + (page - 1) * postsPerPage
     const take = postsPerPage
     const URL = getURL(`/api/posts?from=${from}&take=${take}`)
+    console.log('get posts:', URL)
     const { data: posts = [] } = await axios.get(`${URL}`)
     return posts
   } catch (error) {

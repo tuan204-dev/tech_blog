@@ -19,7 +19,7 @@ export default async function Bookmarks() {
   const markedPosts = await getMarkedPosts({ userId: session.user.id })
 
   return (
-    <div className="flex-1 pt-10 pb-16 px-16 h-min-[100%] flex flex-row flex-wrap gap-16 justify-center">
+    <div className="pt-10 pb-16 px-16 md:px-2 flex flex-row flex-wrap gap-16 justify-center">
       {markedPosts?.map((post: any) => (
         <PostItem key={post.id} {...post} />
       ))}

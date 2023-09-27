@@ -46,9 +46,9 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`border-r-style relative transition ${
+      className={`border-r-style relative transition group md:hidden ${
         isExpanded ? 'w-60' : 'w-12'
-      } group`}
+      }`}
     >
       <div className="absolute z-10 top-[10%] bg-transparent w-4 right-0 translate-x-1/2 flex items-center justify-center cursor-pointer transition opacity-0 group-hover:opacity-100">
         <span
