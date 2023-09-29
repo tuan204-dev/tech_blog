@@ -97,6 +97,21 @@ export async function getUserById({ id }: { id: string }): Promise<User | null> 
   }
 }
 
+export async function getUserByIdOnClientSide({
+  id,
+}: {
+  id: string
+}): Promise<User | null> {
+  try {
+    const URL = getURL(`/api/user/${id}`)
+    const { data: user } = await axios.get(URL)
+    return user
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
 export async function getUserByUsername({
   username,
 }: {

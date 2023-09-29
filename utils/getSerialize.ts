@@ -12,7 +12,7 @@ export default async function getSerialize({
   const mdxSource = await serialize(mdValue.replace(/\\n/g, '\\'), {
     mdxOptions: {
       rehypePlugins: [rehypeHighlight as any, remarkMdx, rehypeSlug],
-      development: true,
+      // development: true,
     },
   })
 

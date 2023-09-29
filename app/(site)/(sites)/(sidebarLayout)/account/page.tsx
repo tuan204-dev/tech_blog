@@ -1,15 +1,15 @@
 'use client'
 
 import useCurrentUser from '@/hooks/useCurrentUser'
+import { getUserByIdOnClientSide, getUserByUsername, updateCurrentUser } from '@/libs/actions'
+import handleUploadImage from '@/utils/handleUploadImage'
+import { User } from '@prisma/client'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { User } from '@prisma/client'
-import { getUserById, getUserByUsername, updateCurrentUser } from '@/libs/actions'
-import Image from 'next/image'
-import { HiOutlineCamera } from 'react-icons/hi'
-import { BiUser } from 'react-icons/bi'
-import handleUploadImage from '@/utils/handleUploadImage'
 import toast from 'react-hot-toast'
+import { BiUser } from 'react-icons/bi'
+import { HiOutlineCamera } from 'react-icons/hi'
 
 const Account: React.FC = () => {
   const { currentUser, isLoading } = useCurrentUser()
@@ -37,7 +37,7 @@ const Account: React.FC = () => {
   useEffect(() => {
     if (currentUser?.id) {
       ;(async () => {
-        const user = (await getUserById({ id: currentUser.id })) as User
+        const user = (await getUserByIdOnClientSide({ id: currentUser.id })) as User
         setAvatarUrl(user?.profileImage || user?.image || '')
         setFullName(user?.name as string)
         setUsername(user?.username || '')
@@ -89,8 +89,6 @@ const Account: React.FC = () => {
     mutate()
     router.push('/')
   }
-
-  console.log(usernameExisted)
 
   return (
     <div className="flex justify-center">
