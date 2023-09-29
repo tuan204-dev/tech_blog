@@ -149,14 +149,14 @@ const Editor: React.FC<EditorProps> = ({
             <input
               type="file"
               id="thumbnailImage"
-              accept="image/png, image/jpeg, , image/avif, image/gif"
+              accept="image/*"
               ref={thumbInput}
               className="hidden"
               onChange={(e) => setThumbFile(e.target.files?.[0] || null)}
             />
             <input
               type="file"
-              accept="image/png, image/jpeg, , image/avif, image/gif"
+              accept="image/*"
               id="image"
               ref={imgInput}
               className="hidden"

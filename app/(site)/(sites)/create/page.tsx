@@ -1,12 +1,13 @@
 'use client'
 
 import Editor from '@/components/Editor/Editor'
+import Footer from '@/components/Footer'
 import { EditorContext } from '@/contexts/EditorContext'
 import useCurrentUser from '@/hooks/useCurrentUser'
 import { useRouter } from 'next/navigation'
 import { useContext, useEffect } from 'react'
 
-const Admin: React.FC = () => {
+const CreatePage: React.FC = () => {
   const {
     mdValue,
     setMdValue,
@@ -32,18 +33,21 @@ const Admin: React.FC = () => {
   }, [isLoading, currentUser])
 
   return (
-    <div className="flex flex-col h-[calc(100vh-70px)] min-w-[450px]">
-      <Editor
-        value={mdValue}
-        setValue={setMdValue}
-        title={title}
-        setTitle={setTitle}
-        desc={desc}
-        setDesc={setDesc}
-        setThumbUrl={setThumbUrl}
-      />
-    </div>
+    <>
+      <div className="flex flex-col h-[calc(100vh-70px)] min-w-[450px]">
+        <Editor
+          value={mdValue}
+          setValue={setMdValue}
+          title={title}
+          setTitle={setTitle}
+          desc={desc}
+          setDesc={setDesc}
+          setThumbUrl={setThumbUrl}
+        />
+      </div>
+      <Footer />
+    </>
   )
 }
 
-export default Admin
+export default CreatePage

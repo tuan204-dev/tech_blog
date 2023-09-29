@@ -1,7 +1,11 @@
 'use client'
 
 import useCurrentUser from '@/hooks/useCurrentUser'
-import { getUserByIdOnClientSide, getUserByUsername, updateCurrentUser } from '@/libs/actions'
+import {
+  getUserByIdOnClientSide,
+  getUserByUsername,
+  updateCurrentUser,
+} from '@/libs/actions'
 import handleUploadImage from '@/utils/handleUploadImage'
 import { User } from '@prisma/client'
 import Image from 'next/image'
@@ -126,7 +130,7 @@ const Account: React.FC = () => {
               onChange={(e) => setAvatarFile(e.target.files?.[0] || null)}
               type="file"
               className="hidden"
-              accept="image/png, image/jpeg, , image/avif, image/gif"
+              accept="image/*"
               ref={avatarRef}
             />
           </div>

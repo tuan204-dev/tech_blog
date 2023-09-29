@@ -1,6 +1,7 @@
 'use client'
 
 import Editor from '@/components/Editor/Editor'
+import Footer from '@/components/Footer'
 import { EditorContext } from '@/contexts/EditorContext'
 import useCurrentUser from '@/hooks/useCurrentUser'
 import { getPostByIdOnClientSide } from '@/libs/actions'
@@ -40,17 +41,20 @@ const EditPost = ({ params }: { params: { id: string } }) => {
   ])
 
   return (
-    <div className="flex flex-col h-[calc(100vh-70px)] min-w-[450px]">
-      <Editor
-        title={title}
-        desc={desc}
-        value={mdValue}
-        setThumbUrl={setThumbUrl}
-        setTitle={setTitle}
-        setDesc={setDesc}
-        setValue={setMdValue}
-      />
-    </div>
+    <>
+      <div className="flex flex-col h-[calc(100vh-70px)] min-w-[450px]">
+        <Editor
+          title={title}
+          desc={desc}
+          value={mdValue}
+          setThumbUrl={setThumbUrl}
+          setTitle={setTitle}
+          setDesc={setDesc}
+          setValue={setMdValue}
+        />
+      </div>
+      <Footer />
+    </>
   )
 }
 
