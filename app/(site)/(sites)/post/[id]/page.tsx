@@ -19,11 +19,11 @@ export async function generateMetadata({ params }: { params: any }) {
     url: `https://tuandg.vercel.app/post/${postId}`,
   }
 }
+// export const revalidate = 0
 
 export default async function Post({ params }: { params: any }) {
   const postId = params.id
   const session = await getAuthSession()
-  
 
   const post = await getPostById({ postId })
 
@@ -31,7 +31,7 @@ export default async function Post({ params }: { params: any }) {
     <>
       <article className="py-10 overflow-hidden min-w-[350px] min-h-[calc(100vh-150px)]">
         <div className="mx-auto flex flex-col items-center w-full max-w-[1200px] px-8 lg:px-7 md:px-6">
-          <header className="flex flex-col w-full px-20 lg:px-10 md:px-8">
+          <header className="flex flex-col w-full px-20 lg:px-10 md:px-2">
             <div className="flex items-center">
               <h1 className="flex-1 text-slate-800 dark:text-white text-5xl font-extrabold leading-snug">
                 {post?.title}

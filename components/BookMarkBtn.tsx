@@ -2,6 +2,7 @@
 
 import useCurrentUser from '@/hooks/useCurrentUser'
 import { toggleMarkPost } from '@/libs/actions'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsBookmarkFill, BsBookmarkPlus } from 'react-icons/bs'
@@ -14,15 +15,18 @@ const BookMarkBtn: React.FC<BookMarkBtnProps> = ({ postId }) => {
   const { currentUser, isLoading } = useCurrentUser()
   const [isMarked, setMarked] = useState<boolean>(false)
 
+  const router = useRouter()
+
   useEffect(() => {
     if (!isLoading) {
       const isMarked = currentUser?.bookmarkedIds?.includes(postId)
       setMarked(isMarked)
     }
-  }, [isLoading, currentUser, postId])
+  }, [isLoading, currentUser, postId, router])
 
   const handleToggleMark = useCallback(async () => {
     try {
+      if (!currentUser) return router.push('/login')
       await toggleMarkPost({ postId })
       if (isMarked) {
         toast.success('Unmarked!')

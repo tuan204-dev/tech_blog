@@ -47,7 +47,7 @@ const PreviewModal: React.FC = () => {
                 {title || 'Article Preview'}
               </h1>
               <div className="h-[2px] w-[calc(100%-120px)] bg-slate-300 mx-auto mb-5"></div>
-              {mdValue && previewValue && <MDXRender source={previewValue!} />}
+              <div className='md:px-6'>{mdValue && previewValue && <MDXRender source={previewValue!} />}</div>
             </div>
           </div>
         </div>

@@ -2,14 +2,28 @@ import axios from 'axios'
 import { postsPerPage } from '../constants'
 import getURL from '../utils/getURL'
 import { Post, User } from '@prisma/client'
+import prisma from './prismadb'
 
 export async function getPosts({ page }: { page: number }): Promise<Post[]> {
   try {
     const from = 1 + (page - 1) * postsPerPage
     const take = postsPerPage
-    const URL = getURL(`/api/posts?from=${from}&take=${take}`)
-    console.log('get posts:', URL)
-    const { data: posts = [] } = await axios.get(`${URL}`)
+    const posts =
+      (await prisma.post.findMany({
+        where: {
+          accepted: true,
+          // accepted: true, in production
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip: from ? from - 1 : undefined,
+        take: take ? take : undefined,
+      })) || []
+
     return posts
   } catch (error) {
     console.log(error)
@@ -19,8 +33,27 @@ export async function getPosts({ page }: { page: number }): Promise<Post[]> {
 
 export async function getPostById({ postId }: { postId: string }): Promise<Post | null> {
   try {
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+    })
+
+    return post
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export async function getPostByIdOnClientSide({
+  postId,
+}: {
+  postId: string
+}): Promise<Post | null> {
+  try {
     const URL = getURL(`/api/post/${postId}`)
-    const { data: post } = await axios.get(`${URL}`)
+    const { data: post } = await axios.get(URL)
     return post
   } catch (error) {
     console.log(error)
@@ -30,9 +63,8 @@ export async function getPostById({ postId }: { postId: string }): Promise<Post 
 
 export async function getPostsQuantity(): Promise<number> {
   try {
-    const URL = getURL(`/api/posts/quantity`)
-    const { data: quantity } = (await axios.get(`${URL}`)) || 0
-    return quantity
+    const postsQuantity = (await prisma.post.count()) || 0
+    return postsQuantity
   } catch (error) {
     console.log(error)
     return 0
@@ -53,8 +85,11 @@ export async function getCurrentUser(): Promise<User | null> {
 
 export async function getUserById({ id }: { id: string }): Promise<User | null> {
   try {
-    const URL = getURL(`/api/user/${id}`)
-    const { data: user } = await axios.get(`${URL}`)
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
     return user
   } catch (error) {
     console.log(error)
@@ -68,7 +103,11 @@ export async function getUserByUsername({
   username: string
 }): Promise<User | null> {
   try {
-    const { data: user } = await axios.get(`/api/user/find/username/${username}`)
+    const user = await prisma.user.findFirst({
+      where: {
+        username,
+      },
+    })
     return user
   } catch (error) {
     console.log(error)
@@ -78,7 +117,11 @@ export async function getUserByUsername({
 
 export async function getUserByEmail({ email }: { email: string }): Promise<User | null> {
   try {
-    const { data: user } = await axios.get(`/api/user/find/email/${email}`)
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    })
     return user
   } catch (error) {
     console.log(error)
@@ -207,8 +250,13 @@ export async function toggleMarkPost({ postId }: { postId: string }) {
 
 export async function getMarkedPosts({ userId }: { userId: string }): Promise<Post[]> {
   try {
-    const URL = getURL(`/api/user/${userId}/markedPost`)
-    const { data: markedPosts } = await axios.get(URL)
+    const markedPosts = await prisma.post.findMany({
+      where: {
+        bookmarkedIds: {
+          has: userId,
+        },
+      },
+    })
 
     return markedPosts
   } catch (error) {

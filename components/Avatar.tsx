@@ -37,7 +37,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, hasBorder, isLarge }) => {
     >
       <Image
         alt="Avatar"
-        onClick={handleClick}
+        // onClick={handleClick}
         style={{ objectFit: 'cover', borderRadius: '100%' }}
         src={user?.profileImage || user?.image || '/images/placeholder.jpg'}
         width={isLarge ? 128 : 40}

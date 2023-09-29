@@ -1,31 +1,24 @@
 'use client'
 
-import { getAuthSession } from '@/app/api/auth/[...nextauth]/options'
 import Editor from '@/components/Editor/Editor'
 import { EditorContext } from '@/contexts/EditorContext'
 import useCurrentUser from '@/hooks/useCurrentUser'
-import { getPostById } from '@/libs/actions'
+import { getPostByIdOnClientSide } from '@/libs/actions'
 import { useRouter } from 'next/navigation'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 
 const EditPost = ({ params }: { params: { id: string } }) => {
   const { setTitle, setThumbUrl, setDesc, setMdValue, title, desc, mdValue } =
     useContext(EditorContext)
-  // const [post, setPost] = useState<any>(null)
   const { currentUser, isLoading } = useCurrentUser()
 
   const router = useRouter()
 
-  // useEffect(() => {
-  //   if (!isLoading && post && post?.userId !== currentUser?.id) {
-  //     router.push('/')
-  //   }
-  // }, [isLoading, post, currentUser])
-
   useEffect(() => {
     ;(async () => {
       if (!isLoading && currentUser) {
-        const post = await getPostById({ postId: params.id })
+        const post = await getPostByIdOnClientSide({ postId: params.id })
+        console.log(post)
         if (currentUser?.id !== post?.userId) {
           return router.push('/')
         }

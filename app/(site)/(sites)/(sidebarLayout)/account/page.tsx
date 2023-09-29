@@ -30,7 +30,7 @@ const Account: React.FC = () => {
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
-      router.push('/')
+      router.push('/login')
     }
   }, [isLoading, currentUser])
 

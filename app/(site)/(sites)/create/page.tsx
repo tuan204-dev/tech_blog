@@ -24,7 +24,7 @@ const Admin: React.FC = () => {
   useEffect(() => {
     if (!isLoading) {
       if (!currentUser) {
-        router.push('/')
+        router.push('/login')
       } else {
         clearContent()
       }
