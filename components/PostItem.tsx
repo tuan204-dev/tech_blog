@@ -1,8 +1,9 @@
+import { Post } from '@prisma/client'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
 
-interface PostItemProps extends IPost {}
+interface PostItemProps extends Post {}
 
 export default function PostItem({
   title,
@@ -10,6 +11,7 @@ export default function PostItem({
   desc,
   createdAt,
   id,
+  estimatedTime,
 }: PostItemProps) {
   return (
     <Link href={`/post/${id}`}>
@@ -21,9 +23,15 @@ export default function PostItem({
           <span className="text-[#191919] dark:text-[#f8f9fa] text-base leading-snug mt-4 line-clamp-2">
             {desc}
           </span>
-          <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-2 ">
-            {format(new Date(createdAt), 'PP')}
-          </time>
+          <div className="flex items-center gap-1 mt-2 text-[#585863] dark:text-[#D2D3D7]">
+            <time className="text-sm ">
+              {format(new Date(createdAt), 'PP')}
+            </time>
+            <span>-</span>
+            <span className="text-sm ">
+              {estimatedTime} min read
+            </span>
+          </div>
         </div>
         <div className="overflow-hidden h-40 rounded-xl my-4 shadow-sm w-fit">
           <Image

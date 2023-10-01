@@ -19,7 +19,6 @@ const EditPost = ({ params }: { params: { id: string } }) => {
     ;(async () => {
       if (!isLoading && currentUser) {
         const post = await getPostByIdOnClientSide({ postId: params.id })
-        console.log(post)
         if (currentUser?.id !== post?.userId) {
           return router.push('/')
         }

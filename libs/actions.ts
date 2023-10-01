@@ -150,12 +150,14 @@ export async function createPost({
   rawContent,
   thumbnail,
   htmlContent,
+  estimatedTime,
 }: {
   title: string
   desc: string
   rawContent: string
   thumbnail: string
   htmlContent: string
+  estimatedTime: string
 }): Promise<Post | null> {
   try {
     const URL = getURL(`/api/post`)
@@ -165,6 +167,7 @@ export async function createPost({
       rawContent,
       thumbnail,
       htmlContent,
+      estimatedTime,
     })
     return newPost
   } catch (error) {
@@ -180,6 +183,7 @@ export async function updatePost({
   rawContent,
   thumbnail,
   htmlContent,
+  estimatedTime,
 }: {
   postId: string
   title: string
@@ -187,6 +191,7 @@ export async function updatePost({
   rawContent: string
   thumbnail: string
   htmlContent: string
+  estimatedTime: string
 }): Promise<Post | null> {
   try {
     const URL = getURL(`/api/post/${postId}/update`)
@@ -196,6 +201,7 @@ export async function updatePost({
       rawContent,
       thumbnail,
       htmlContent,
+      estimatedTime,
     })
     return updatedPost
   } catch (error) {

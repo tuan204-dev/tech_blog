@@ -73,6 +73,7 @@ model Post {
   accepted      Boolean  @default(true)
   rawContent    String
   htmlContent   String
+  estimatedTime String   @default("0")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   likedIds      String[] @db.ObjectId

@@ -11,6 +11,7 @@ import { AiOutlineEdit } from 'react-icons/ai'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import remarkMdx from 'remark-mdx'
+import { AiOutlineRead } from 'react-icons/ai'
 
 export async function generateMetadata({ params }: { params: any }) {
   const postId = params.id
@@ -61,9 +62,17 @@ export default async function Post({ params }: { params: any }) {
                   </Link>
                 )}
               </div>
-              <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mt-8">
-                Last updated: {format(new Date(post!.updatedAt), 'PP')}
-              </time>
+              <div className="flex items-center mt-8">
+                <time className="text-sm text-[#585863] dark:text-[#D2D3D7] mr-6">
+                  Last updated: {format(new Date(post!.updatedAt), 'PP')}
+                </time>
+                <div className="flex items-center text-[#585863] dark:text-[#D2D3D7]">
+                  <span className='text-[22px] translate-y-[-1px] mr-[6px]'>
+                    <AiOutlineRead />
+                  </span>
+                  <span className="text-sm ">{post?.estimatedTime} min read</span>
+                </div>
+              </div>
             </div>
           </header>
           <main className="prose dark:prose-invert mt-12 md:mt-10 w-full max-w-[100%]">

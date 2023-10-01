@@ -8,7 +8,8 @@ export const PUT = async (req: NextRequest) => {
   try {
     await getSessionOrUnauthorized()
     const postId = req.url.split('/')[req.url.split('/').length - 2]
-    const { title, rawContent, desc, thumbnail, htmlContent } = await req.json()
+    const { title, rawContent, desc, thumbnail, htmlContent, estimatedTime } =
+      await req.json()
 
     // const htmlMinified = minify(htmlContent)
 
@@ -24,6 +25,7 @@ export const PUT = async (req: NextRequest) => {
         desc: desc ? desc : undefined,
         thumbnail: thumbnail ? thumbnail : undefined,
         htmlContent: htmlContent ? htmlContent : undefined,
+        estimatedTime,
       },
     })
 

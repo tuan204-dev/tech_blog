@@ -1,6 +1,7 @@
 'use client'
 
 import { createPost, updatePost } from '@/libs/actions'
+import getEstimatedReadingTime from '@/utils/getEstimatedReadingTime'
 import getSerialize from '@/utils/getSerialize'
 import { useRouter } from 'next/navigation'
 import { createContext, useState } from 'react'
@@ -36,8 +37,9 @@ export default function EditorProvider({ children }: { children: React.ReactNode
       if (!title) return toast.error('Please enter title!')
       if (!desc) return toast.error('Please enter description!')
       if (!thumbUrl) return toast.error('Please upload thumbnail!')
-      const mdxContent = await getSerialize({ mdValue })
+      // const mdxContent = await getSerialize({ mdValue })
       // const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
+      const estimatedTime = getEstimatedReadingTime(mdValue)
 
       const newPost = await createPost({
         title: title.trim(),
@@ -45,6 +47,7 @@ export default function EditorProvider({ children }: { children: React.ReactNode
         rawContent: mdValue,
         thumbnail: thumbUrl,
         htmlContent: '',
+        estimatedTime: `${estimatedTime}`,
       })
 
       router.push(`/post/${newPost!.id}`)
@@ -56,8 +59,9 @@ export default function EditorProvider({ children }: { children: React.ReactNode
 
   const handleUpdatePost = async ({ postId }: { postId: string }) => {
     try {
-      const mdxContent = await getSerialize({ mdValue })
+      // const mdxContent = await getSerialize({ mdValue })
       // const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
+      const estimatedTime = getEstimatedReadingTime(mdValue)
 
       await updatePost({
         postId,
@@ -66,6 +70,7 @@ export default function EditorProvider({ children }: { children: React.ReactNode
         rawContent: mdValue,
         thumbnail: thumbUrl,
         htmlContent: '',
+        estimatedTime: `${estimatedTime}`,
       })
       window.location.href = `/post/${postId}`
       toast.success('Updated article!')
