@@ -1,11 +1,9 @@
 'use client'
 
-import MDXRender from '@/components/MDXRender'
 import { createPost, updatePost } from '@/libs/actions'
 import getSerialize from '@/utils/getSerialize'
 import { useRouter } from 'next/navigation'
 import { createContext, useState } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 import toast from 'react-hot-toast'
 
 interface EditorContextProps {
@@ -39,14 +37,14 @@ export default function EditorProvider({ children }: { children: React.ReactNode
       if (!desc) return toast.error('Please enter description!')
       if (!thumbUrl) return toast.error('Please upload thumbnail!')
       const mdxContent = await getSerialize({ mdValue })
-      const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
+      // const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
 
       const newPost = await createPost({
         title: title.trim(),
         desc: desc.trim(),
         rawContent: mdValue,
         thumbnail: thumbUrl,
-        htmlContent,
+        htmlContent: '',
       })
 
       router.push(`/post/${newPost!.id}`)
@@ -59,7 +57,7 @@ export default function EditorProvider({ children }: { children: React.ReactNode
   const handleUpdatePost = async ({ postId }: { postId: string }) => {
     try {
       const mdxContent = await getSerialize({ mdValue })
-      const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
+      // const htmlContent = renderToStaticMarkup(<MDXRender source={mdxContent!} />)
 
       await updatePost({
         postId,
@@ -67,7 +65,7 @@ export default function EditorProvider({ children }: { children: React.ReactNode
         desc: desc.trim(),
         rawContent: mdValue,
         thumbnail: thumbUrl,
-        htmlContent,
+        htmlContent: '',
       })
       window.location.href = `/post/${postId}`
       toast.success('Updated article!')

@@ -279,3 +279,14 @@ export async function getMarkedPosts({ userId }: { userId: string }): Promise<Po
     return []
   }
 }
+
+export async function handleSearchPost({ query }: { query: string }): Promise<Post[]> {
+  try {
+    const URL = getURL(`/api/search?q=${query}`)
+    const { data: posts } = (await axios.get(URL)) || []
+    return posts
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}

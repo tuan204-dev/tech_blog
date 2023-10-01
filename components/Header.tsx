@@ -6,17 +6,23 @@ import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { FiMoon, FiSearch, FiSun } from 'react-icons/fi'
 import { MdOutlineCloudUpload } from 'react-icons/md'
 import { EditorContext } from '../contexts/EditorContext'
 import Avatar from './Avatar'
+import Headless, { PostInclUser } from './Headless'
+import { Post } from '@prisma/client'
+import { handleSearchPost } from '@/libs/actions'
 
 const Header = () => {
   const { theme, systemTheme, setTheme } = useTheme()
   const [isDarkMode, setDarkMode] = useState<boolean>(
     theme === 'dark' || systemTheme === 'dark'
   )
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchResults, setSearchResults] = useState<PostInclUser[]>([])
+  const [isInputFocused, setIsInputFocused] = useState<boolean>(false)
 
   const { handlePost, handleUpdatePost } = useContext(EditorContext)
 
@@ -33,6 +39,19 @@ const Header = () => {
     },
     [isDarkMode, setTheme]
   )
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchQuery) {
+        ;(async () => {
+          const posts = (await handleSearchPost({ query: searchQuery })) as any
+          setSearchResults(posts)
+        })()
+      }
+    }, 500)
+
+    return () => clearTimeout(timeoutId)
+  }, [searchQuery])
 
   const popoverContent = (
     <div>
@@ -56,15 +75,24 @@ const Header = () => {
         />
       </Link>
       <div className="absolute right-0 left-0 justify-center flex md:hidden">
-        <form className="flex items-center w-80 h-10 rounded-full bg-[#f0f2f5] dark:bg-[#3a3b3c] text-[#65676b] dark:text-[#b0b3b8] transition">
+        <form className="relative flex items-center w-80 h-10 rounded-full bg-[#f0f2f5] dark:bg-[#3a3b3c] text-[#65676b] dark:text-[#b0b3b8] transition">
           <span className="pl-3">
             <FiSearch />
           </span>
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
             placeholder="Search Article"
             className="bg-transparent h-full flex-1 px-2 outline-none placeholder:text-center text-[#65676b] dark:text-[#e4e6eb] pr-9"
           />
+          <div className="absolute top-14 right-[-50px] left-[-50px]">
+            {searchResults?.length !== 0 && isInputFocused && (
+              <Headless data={searchResults} />
+            )}
+          </div>
         </form>
       </div>
       <div className="flex items-center relative z-10">

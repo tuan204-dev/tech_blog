@@ -2,10 +2,15 @@ import { getAuthSession } from '@/app/api/auth/[...nextauth]/options'
 import Author from '@/components/Author'
 import BookMarkBtn from '@/components/BookMarkBtn'
 import Footer from '@/components/Footer'
-import { getCurrentUser, getPostById } from '@/libs/actions'
+import mdxComponents from '@/components/MDXComponents'
+import { getPostById } from '@/libs/actions'
 import { format } from 'date-fns'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { AiOutlineEdit } from 'react-icons/ai'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeSlug from 'rehype-slug'
+import remarkMdx from 'remark-mdx'
 
 export async function generateMetadata({ params }: { params: any }) {
   const postId = params.id
@@ -62,7 +67,17 @@ export default async function Post({ params }: { params: any }) {
             </div>
           </header>
           <main className="prose dark:prose-invert mt-12 md:mt-10 w-full max-w-[100%]">
-            <div dangerouslySetInnerHTML={{ __html: post?.htmlContent as string }}></div>
+            {/* <div dangerouslySetInnerHTML={{ __html: post?.htmlContent as string }}></div> */}
+            <MDXRemote
+              options={{
+                mdxOptions: {
+                  rehypePlugins: [rehypeHighlight as any, remarkMdx, rehypeSlug],
+                  // development: true,
+                },
+              }}
+              source={post?.rawContent || ''}
+              components={mdxComponents}
+            />
           </main>
         </div>
       </article>
