@@ -34,7 +34,7 @@ export default async function Post({ params }: { params: any }) {
 
   return (
     <>
-      <article className="py-10 overflow-hidden min-w-[350px] min-h-[calc(100vh-150px)]">
+      <article className="py-10 md:py-5 overflow-hidden min-w-[350px] min-h-[calc(100vh-150px)]">
         <div className="mx-auto flex flex-col items-center w-full max-w-[1200px] px-8 lg:px-7 md:px-6">
           <header className="flex flex-col w-full px-20 lg:px-10 md:px-2">
             <div className="flex items-center">
