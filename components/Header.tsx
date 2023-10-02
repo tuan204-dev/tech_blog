@@ -1,5 +1,6 @@
 'use client'
 
+import { handleSearchPost } from '@/libs/actions'
 import { Popover } from 'antd'
 import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
@@ -12,8 +13,7 @@ import { MdOutlineCloudUpload } from 'react-icons/md'
 import { EditorContext } from '../contexts/EditorContext'
 import Avatar from './Avatar'
 import Headless, { PostInclUser } from './Headless'
-import { Post } from '@prisma/client'
-import { handleSearchPost } from '@/libs/actions'
+import useSearchModal from '@/hooks/useSearchModal'
 
 const Header = () => {
   const { theme, systemTheme, setTheme } = useTheme()
@@ -28,6 +28,7 @@ const Header = () => {
 
   const pathname = usePathname()
   const editPostRegex = new RegExp('^/post/[^/]+/edit$')
+  const searchModal = useSearchModal()
 
   const { data: session } = useSession()
 
@@ -42,16 +43,19 @@ const Header = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (searchQuery) {
+      if (searchQuery || searchModal.searchQuery) {
         ;(async () => {
-          const posts = (await handleSearchPost({ query: searchQuery })) as any
+          const posts = (await handleSearchPost({
+            query: searchQuery || (searchModal.searchQuery as string),
+          })) as any
           setSearchResults(posts)
+          searchModal.setSearchResults(posts)
         })()
       }
     }, 500)
 
     return () => clearTimeout(timeoutId)
-  }, [searchQuery])
+  }, [searchQuery, searchModal.searchQuery])
 
   const popoverContent = (
     <div>
@@ -96,7 +100,10 @@ const Header = () => {
         </form>
       </div>
       <div className="flex items-center relative z-10">
-        <button className="hidden md:flex items-center mr-6 ">
+        <button
+          onClick={searchModal.onOpen}
+          className="hidden md:flex items-center mr-6 "
+        >
           <span className="">
             <FiSearch />
           </span>

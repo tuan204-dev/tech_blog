@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`border-r-style relative transition group ${
+      className={`border-r-style relative transition group h-full ${
         isExpanded ? 'w-60' : 'w-12'
       }`}
     >

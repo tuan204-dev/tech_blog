@@ -4,7 +4,7 @@ import { PostInclUser } from './Headless'
 const SearchItem: React.FC<PostInclUser> = ({ title, user, id }) => {
   return (
     <Link href={`/post/${id}`}>
-      <div className="flex flex-col px-4 py-2 hover:bg-[#ebeced] dark:hover:bg-[#303136] cursor-pointer">
+      <div className="flex flex-col px-4 py-2 hover:bg-[#ebeced] dark:hover:bg-[#303136] cursor-pointer md:border-[#52586633] border-b-[1px]">
         <h3 className="text-slate-800 dark:text-white text-base font-semibold line-clamp-1">
           {title}
         </h3>
