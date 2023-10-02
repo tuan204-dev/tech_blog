@@ -23,6 +23,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [searchResults, setSearchResults] = useState<PostInclUser[]>([])
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false)
+  const [isSearchResultsVisible, setSearchResultsVisible] = useState<boolean>(false)
 
   const { handlePost, handleUpdatePost } = useContext(EditorContext)
 
@@ -56,6 +57,16 @@ const Header = () => {
 
     return () => clearTimeout(timeoutId)
   }, [searchQuery, searchModal.searchQuery])
+
+  useEffect(() => {
+    if (isInputFocused) {
+      setSearchResultsVisible(true)
+    } else {
+      setTimeout(() => {
+        setSearchResultsVisible(false)
+      }, 200)
+    }
+  }, [isInputFocused])
 
   const popoverContent = (
     <div>
@@ -93,7 +104,7 @@ const Header = () => {
             className="bg-transparent h-full flex-1 px-2 outline-none placeholder:text-center text-[#65676b] dark:text-[#e4e6eb] pr-9"
           />
           <div className="absolute top-14 right-[-50px] left-[-50px]">
-            {searchResults?.length !== 0 && isInputFocused && (
+            {searchResults?.length !== 0 && isSearchResultsVisible && (
               <Headless data={searchResults} />
             )}
           </div>
