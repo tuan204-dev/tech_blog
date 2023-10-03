@@ -1,5 +1,7 @@
 'use client'
 
+import useSearchArticle from '@/hooks/useSearchArticle'
+import useSearchModal from '@/hooks/useSearchModal'
 import { Popover } from 'antd'
 import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
@@ -11,9 +13,7 @@ import { FiMoon, FiSearch, FiSun } from 'react-icons/fi'
 import { MdOutlineCloudUpload } from 'react-icons/md'
 import { EditorContext } from '../contexts/EditorContext'
 import Avatar from './Avatar'
-import Headless, { PostInclUser } from './Headless'
-import useSearchModal from '@/hooks/useSearchModal'
-import handleSearchPost from '@/libs/actions/client/handleSearchPost'
+import Headless from './Headless'
 
 const Header = () => {
   const { theme, systemTheme, setTheme } = useTheme()
@@ -21,11 +21,15 @@ const Header = () => {
     theme === 'dark' || systemTheme === 'dark'
   )
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [searchResults, setSearchResults] = useState<PostInclUser[]>([])
+  const [searchQueryDebounce, setSearchQueryDebounce] = useState<string>('')
+  // const [searchResults, setSearchResults] = useState<PostInclUser[]>([])
+
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false)
   const [isSearchResultsVisible, setSearchResultsVisible] = useState<boolean>(false)
 
   const { handlePost, handleUpdatePost } = useContext(EditorContext)
+
+  const { data: searchResults, isLoading } = useSearchArticle(searchQueryDebounce)
 
   const pathname = usePathname()
   const editPostRegex = new RegExp('^/post/[^/]+/edit$')
@@ -44,19 +48,11 @@ const Header = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (searchQuery || searchModal.searchQuery) {
-        ;(async () => {
-          const posts = (await handleSearchPost({
-            query: searchQuery || (searchModal.searchQuery as string),
-          })) as any
-          setSearchResults(posts)
-          searchModal.setSearchResults(posts)
-        })()
-      }
-    }, 500)
+      setSearchQueryDebounce(searchQuery)
+    }, 200)
 
     return () => clearTimeout(timeoutId)
-  }, [searchQuery, searchModal.searchQuery])
+  }, [searchQuery])
 
   useEffect(() => {
     if (isInputFocused) {
@@ -72,7 +68,7 @@ const Header = () => {
     <div>
       <button
         onClick={() => signOut()}
-        className="font-semibold h-full hover:opacity-90 transition"
+        className="h-full font-semibold transition hover:opacity-90"
       >
         Log out
       </button>
@@ -89,7 +85,7 @@ const Header = () => {
           alt="blog logo"
         />
       </Link>
-      <div className="absolute right-0 left-0 justify-center flex md:hidden">
+      <div className="absolute left-0 right-0 flex justify-center md:hidden">
         <form className="relative flex items-center w-80 h-10 rounded-full bg-[#f0f2f5] dark:bg-[#3a3b3c] text-[#65676b] dark:text-[#b0b3b8] transition">
           <span className="pl-3">
             <FiSearch />
@@ -105,19 +101,23 @@ const Header = () => {
           />
           <div className="absolute top-14 right-[-50px] left-[-50px]">
             {isSearchResultsVisible && searchQuery && (
-              <Headless searchQuery={searchQuery} data={searchResults} />
+              <Headless
+                isLoading={isLoading}
+                searchQuery={searchQuery}
+                data={searchResults}
+              />
             )}
           </div>
         </form>
       </div>
-      <div className="flex items-center relative z-10">
-        <button onClick={searchModal.onOpen} className="hidden md:flex items-center mr-6">
+      <div className="relative z-10 flex items-center">
+        <button onClick={searchModal.onOpen} className="items-center hidden mr-6 md:flex">
           <span className="">
             <FiSearch />
           </span>
         </button>
         <button className="mr-8" onClick={toggleTheme}>
-          <div className="text-xl dark:text-white outline-none">
+          <div className="text-xl outline-none dark:text-white">
             {isDarkMode ? <FiMoon /> : <FiSun />}
           </div>
         </button>
@@ -130,26 +130,26 @@ const Header = () => {
                   })
                 : handlePost()
             }}
-            className="w-fit px-3 py-2 flex items-center rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition mr-7"
+            className="flex items-center px-3 py-2 font-semibold text-white transition bg-blue-600 rounded-full shadow-md w-fit dark:bg-blue-500 hover:brightness-110 hover:scale-105 mr-7"
           >
             <span className="text-2xl font-bold">
               <MdOutlineCloudUpload />
             </span>
-            <span className="block md:hidden ml-2 font-semibold">
+            <span className="block ml-2 font-semibold md:hidden">
               {editPostRegex.test(pathname) ? 'Update' : 'Post'}
             </span>
           </button>
         )}
         {session ? (
           <Popover content={popoverContent} trigger={'hover'}>
-            <div className="shadow-sm rounded-full">
+            <div className="rounded-full shadow-sm">
               <Avatar userId={session?.user.id} hasBorder />
             </div>
           </Popover>
         ) : (
           <Link
             href="/login"
-            className="px-4 py-2 rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition"
+            className="px-4 py-2 font-semibold text-white transition bg-blue-600 rounded-full shadow-md dark:bg-blue-500 hover:brightness-110 hover:scale-105"
           >
             Login
           </Link>

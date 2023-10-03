@@ -1,15 +1,11 @@
-'use client'
-import { useTheme } from 'next-themes'
-import { SwapSpinner } from 'react-spinners-kit'
+import Loading from '@/components/Loading'
 
-const Loading = () => {
-  const { systemTheme } = useTheme()
-
+const loading = () => {
   return (
-    <div className="h-screen w-full flex justify-center items-center bg-white dark:bg-dark-base">
-      <SwapSpinner size={65} color={systemTheme === 'dark' ? '#333' : '#ccc'} />
+    <div className="flex items-center justify-center w-full h-screen bg-white dark:bg-dark-base">
+      <Loading size={65} />
     </div>
   )
 }
 
-export default Loading
+export default loading

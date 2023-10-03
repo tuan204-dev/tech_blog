@@ -1,6 +1,5 @@
 'use client'
 
-import useCurrentUser from '@/hooks/useCurrentUser'
 import { Tooltip } from 'antd'
 import { signOut, useSession } from 'next-auth/react'
 import { useMemo, useState } from 'react'
@@ -52,7 +51,7 @@ const Sidebar: React.FC = () => {
         <Tooltip placement="right" title={isExpanded ? 'Shrink' : 'Expand'}>
           <span
             onClick={() => setExpanded((prev) => !prev)}
-            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-xl"
+            className="p-2 text-xl bg-gray-100 rounded-full dark:bg-gray-800"
           >
             {isExpanded ? (
               <BiLeftArrow className="translate-x-[-2px]" />
@@ -76,7 +75,7 @@ const Sidebar: React.FC = () => {
           <a
             href={'https://tuan204-dev.netlify.app/'}
             target="_blank"
-            className="flex items-center h-12 w-full bg-transparent hover:bg-[#dcdee0] dark:hover:bg-[#2d323b] transition duration-[50ms]"
+            className="flex items-center h-12 w-full hover:bg-[#dcdee0] dark:hover:bg-[#2d323b] transition duration-[50ms] bg-transparent"
           >
             <span className={`text-2xl ${!isExpanded ? 'mx-auto' : 'px-2'}`}>
               <GoPaperAirplane />
@@ -87,7 +86,7 @@ const Sidebar: React.FC = () => {
         {session && (
           <Tooltip placement="right" title={!isExpanded && 'Logout'}>
             <button
-              className="flex items-center h-12 w-full bg-transparent hover:bg-[#dcdee0] dark:hover:bg-[#2d323b] transition duration-[50ms]"
+              className="items-center h-12 w-full bg-transparent flex  hover:bg-[#dcdee0] dark:hover:bg-[#2d323b] transition duration-[50ms]"
               onClick={() => signOut()}
             >
               <span className={`text-2xl ${!isExpanded ? 'mx-auto' : 'px-2'}`}>
