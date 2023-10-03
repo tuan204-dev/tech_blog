@@ -1,10 +1,8 @@
 'use client'
 
-import {
-  createAccountWithCredentials,
-  getUserByEmail,
-  getUserByUsername,
-} from '@/libs/actions'
+import createAccountWithCredentials from '@/libs/actions/client/createAccountWithCredentials'
+import getUserByEmail from '@/libs/actions/server/getUserByEmail'
+import getUserByUsername from '@/libs/actions/server/getUserByUsername'
 import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -131,7 +129,9 @@ const Register: React.FC = () => {
     <div className="h-screen min-h-[800px] bg-white dark:bg-gray-900">
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="mx-auto">
-          <Image src="/logo.svg" alt="logo" width={60} height={60} className="" />
+          <Link href="/">
+            <Image src="/logo.svg" alt="logo" width={60} height={60} className="" />
+          </Link>
         </div>
         <div className="mx-auto w-full max-w-sm">
           <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">

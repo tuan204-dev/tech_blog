@@ -55,7 +55,9 @@ const Login: React.FC = () => {
     <div className="h-screen min-h-[800px] bg-white dark:bg-gray-900">
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="flex justify-center">
-          <Image src="/logo.svg" alt="logo" width={60} height={60} className="" />
+          <Link href="/">
+            <Image src="/logo.svg" alt="logo" width={60} height={60} className="" />
+          </Link>
         </div>
         <div className="mx-auto w-full max-w-sm">
           <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">

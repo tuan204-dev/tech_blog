@@ -1,6 +1,6 @@
 'use client'
 
-import {getPostsQuantity} from '@/libs/actions'
+import getPostsQuantity from '@/libs/actions/server/getPostsQuantity'
 import handleUploadImage from '@/utils/handleUploadImage'
 import axios from 'axios'
 import { signOut, useSession } from 'next-auth/react'

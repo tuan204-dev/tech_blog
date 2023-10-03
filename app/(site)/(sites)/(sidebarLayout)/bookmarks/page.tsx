@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/app/api/auth/[...nextauth]/options'
 import PostItem from '@/components/PostItem'
-import { getMarkedPosts } from '@/libs/actions'
+import getMarkedPosts from '@/libs/actions/server/getMarkedPosts'
 import { redirect } from 'next/navigation'
 
 export async function generateMetadata() {

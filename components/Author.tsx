@@ -1,7 +1,6 @@
-import { getUserById } from '@/libs/actions'
+import getUserById from '@/libs/actions/server/getUserById'
 import { User } from '@prisma/client'
 import Image from 'next/image'
-import Link from 'next/link'
 
 interface AuthorProps {
   userId: string

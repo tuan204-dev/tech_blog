@@ -1,7 +1,7 @@
 'use client'
 
 import useCurrentUser from '@/hooks/useCurrentUser'
-import { toggleMarkPost } from '@/libs/actions'
+import toggleMarkPost from '@/libs/actions/client/toggleMarkPost'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'

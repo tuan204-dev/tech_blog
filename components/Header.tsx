@@ -1,6 +1,5 @@
 'use client'
 
-import { handleSearchPost } from '@/libs/actions'
 import { Popover } from 'antd'
 import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
@@ -14,6 +13,7 @@ import { EditorContext } from '../contexts/EditorContext'
 import Avatar from './Avatar'
 import Headless, { PostInclUser } from './Headless'
 import useSearchModal from '@/hooks/useSearchModal'
+import handleSearchPost from '@/libs/actions/client/handleSearchPost'
 
 const Header = () => {
   const { theme, systemTheme, setTheme } = useTheme()
@@ -104,17 +104,14 @@ const Header = () => {
             className="bg-transparent h-full flex-1 px-2 outline-none placeholder:text-center text-[#65676b] dark:text-[#e4e6eb] pr-9"
           />
           <div className="absolute top-14 right-[-50px] left-[-50px]">
-            {searchResults?.length !== 0 && isSearchResultsVisible && (
-              <Headless data={searchResults} />
+            {isSearchResultsVisible && searchQuery && (
+              <Headless searchQuery={searchQuery} data={searchResults} />
             )}
           </div>
         </form>
       </div>
       <div className="flex items-center relative z-10">
-        <button
-          onClick={searchModal.onOpen}
-          className="hidden md:flex items-center mr-6 "
-        >
+        <button onClick={searchModal.onOpen} className="hidden md:flex items-center mr-6">
           <span className="">
             <FiSearch />
           </span>

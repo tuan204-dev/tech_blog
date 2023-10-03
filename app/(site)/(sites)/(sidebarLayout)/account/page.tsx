@@ -1,11 +1,9 @@
 'use client'
 
 import useCurrentUser from '@/hooks/useCurrentUser'
-import {
-  getUserByIdOnClientSide,
-  getUserByUsername,
-  updateCurrentUser,
-} from '@/libs/actions'
+import getUserById from '@/libs/actions/client/getUserById'
+import updateCurrentUser from '@/libs/actions/client/updateCurrentUser'
+import getUserByUsername from '@/libs/actions/server/getUserByUsername'
 import handleUploadImage from '@/utils/handleUploadImage'
 import { User } from '@prisma/client'
 import Image from 'next/image'
@@ -41,7 +39,7 @@ const Account: React.FC = () => {
   useEffect(() => {
     if (currentUser?.id) {
       ;(async () => {
-        const user = (await getUserByIdOnClientSide({ id: currentUser.id })) as User
+        const user = (await getUserById({ id: currentUser.id })) as User
         setAvatarUrl(user?.profileImage || user?.image || '')
         setFullName(user?.name as string)
         setUsername(user?.username || '')

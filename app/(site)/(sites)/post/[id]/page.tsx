@@ -3,7 +3,6 @@ import Author from '@/components/Author'
 import BookMarkBtn from '@/components/BookMarkBtn'
 import Footer from '@/components/Footer'
 import mdxComponents from '@/components/MDXComponents'
-import { getPostById } from '@/libs/actions'
 import { format } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
@@ -12,6 +11,7 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import remarkMdx from 'remark-mdx'
 import { AiOutlineRead } from 'react-icons/ai'
+import getPostById from '@/libs/actions/server/getPostById'
 
 export async function generateMetadata({ params }: { params: any }) {
   const postId = params.id
@@ -67,7 +67,7 @@ export default async function Post({ params }: { params: any }) {
                   Last updated: {format(new Date(post!.updatedAt), 'PP')}
                 </time>
                 <div className="flex items-center text-[#585863] dark:text-[#D2D3D7]">
-                  <span className='text-[22px] translate-y-[-1px] mr-[6px]'>
+                  <span className="text-[22px] translate-y-[-1px] mr-[6px]">
                     <AiOutlineRead />
                   </span>
                   <span className="text-sm ">{post?.estimatedTime} min read</span>
@@ -81,7 +81,6 @@ export default async function Post({ params }: { params: any }) {
               options={{
                 mdxOptions: {
                   rehypePlugins: [rehypeHighlight as any, remarkMdx, rehypeSlug],
-                  // development: true,
                 },
               }}
               source={post?.rawContent || ''}

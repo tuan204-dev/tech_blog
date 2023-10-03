@@ -4,7 +4,7 @@ import Editor from '@/components/Editor/Editor'
 import Footer from '@/components/Footer'
 import { EditorContext } from '@/contexts/EditorContext'
 import useCurrentUser from '@/hooks/useCurrentUser'
-import { getPostByIdOnClientSide } from '@/libs/actions'
+import getPostById from '@/libs/actions/client/getPostById'
 import { useRouter } from 'next/navigation'
 import { useContext, useEffect } from 'react'
 
@@ -18,7 +18,7 @@ const EditPost = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     ;(async () => {
       if (!isLoading && currentUser) {
-        const post = await getPostByIdOnClientSide({ postId: params.id })
+        const post = await getPostById({ postId: params.id })
         if (currentUser?.id !== post?.userId) {
           return router.push('/')
         }

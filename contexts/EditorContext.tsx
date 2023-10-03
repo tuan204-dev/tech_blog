@@ -1,6 +1,7 @@
 'use client'
 
-import { createPost, updatePost } from '@/libs/actions'
+import createPost from '@/libs/actions/client/createPost'
+import updatePost from '@/libs/actions/client/updatePost'
 import getEstimatedReadingTime from '@/utils/getEstimatedReadingTime'
 import getSerialize from '@/utils/getSerialize'
 import { useRouter } from 'next/navigation'

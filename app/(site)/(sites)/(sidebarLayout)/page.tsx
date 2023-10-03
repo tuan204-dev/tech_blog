@@ -1,5 +1,5 @@
 import PostItem from '@/components/PostItem'
-import { getPosts } from '@/libs/actions'
+import getPosts from '@/libs/actions/server/getPost'
 
 interface IProps {
   params: any
