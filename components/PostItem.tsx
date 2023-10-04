@@ -24,16 +24,12 @@ export default function PostItem({
             {desc}
           </span>
           <div className="flex items-center gap-1 mt-2 text-[#585863] dark:text-[#D2D3D7]">
-            <time className="text-sm ">
-              {format(new Date(createdAt), 'PP')}
-            </time>
+            <time className="text-sm ">{format(new Date(createdAt), 'PP')}</time>
             <span>-</span>
-            <span className="text-sm ">
-              {estimatedTime} min read
-            </span>
+            <span className="text-sm ">{estimatedTime} min read</span>
           </div>
         </div>
-        <div className="overflow-hidden h-40 rounded-xl my-4 shadow-sm w-fit">
+        <div className="overflow-hidden h-40 rounded-xl my-4 w-fit">
           <Image
             src={thumbnail}
             width={320}
@@ -45,6 +41,7 @@ export default function PostItem({
               objectPosition: 'center',
               borderRadius: '12px',
             }}
+            className='drop-shadow-md rounded-xl'
           />
         </div>
       </article>
