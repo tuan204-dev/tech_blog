@@ -3,7 +3,7 @@
 import useCurrentUser from '@/hooks/useCurrentUser'
 import getUserById from '@/libs/actions/client/getUserById'
 import updateCurrentUser from '@/libs/actions/client/updateCurrentUser'
-import getUserByUsername from '@/libs/actions/server/getUserByUsername'
+import getUserByUsername from '@/libs/actions/client/getUserByUsername'
 import handleUploadImage from '@/utils/handleUploadImage'
 import { User } from '@prisma/client'
 import Image from 'next/image'
@@ -14,7 +14,7 @@ import { BiUser } from 'react-icons/bi'
 import { HiOutlineCamera } from 'react-icons/hi'
 
 const Account: React.FC = () => {
-  const { currentUser, isLoading } = useCurrentUser()
+  const { currentUser, isLoading, mutate } = useCurrentUser()
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
   const [avatarUrl, setAvatarUrl] = useState<string>('')
   const [fullName, setFullName] = useState<string>()
@@ -23,8 +23,6 @@ const Account: React.FC = () => {
   const [usernameExisted, setUsernameExisted] = useState<boolean>(false)
 
   const [isChanging, setChanging] = useState<boolean>(false)
-
-  const { mutate } = useCurrentUser()
 
   const router = useRouter()
 
@@ -53,7 +51,8 @@ const Account: React.FC = () => {
       if (username) {
         ;(async () => {
           const user = await getUserByUsername({ username })
-          setUsernameExisted(Boolean(user) && user?.username !== username)
+          console.log(user)
+          setUsernameExisted(Boolean(user) && user?.username !== currentUser?.username)
         })()
       }
     }, 300)
@@ -154,10 +153,10 @@ const Account: React.FC = () => {
               </div>
             </div>
             <div
-              className={`flex items-center mt-6 bg-[#52586614] dark:bg-[#a8b3cf14] w-full max-w-[360px] rounded-[14px] px-4 border-[1px] border-transparent ${
+              className={`flex items-center mt-6 bg-[#52586614] dark:bg-[#a8b3cf14] w-full max-w-[360px] rounded-[14px] px-4 border-[1px] ${
                 usernameExisted
-                  ? ''
-                  : '[&:has(input:is(:focus))]:bg-white dark:[&:has(input:is(:focus))]:bg-transparent [&:has(input:is(:focus,:hover))]:border-[#0e1217] dark:[&:has(input:is(:focus,:hover))]:border-white'
+                  ? '[&:has(input:is(:focus))]:bg-white dark:[&:has(input:is(:focus))]:bg-transparent [&:has(input:is(:focus,:hover))]:border-red-500 border-red-500'
+                  : '[&:has(input:is(:focus))]:bg-white dark:[&:has(input:is(:focus))]:bg-transparent [&:has(input:is(:focus,:hover))]:border-[#0e1217] dark:[&:has(input:is(:focus,:hover))]:border-white border-transparent'
               } border-l-[3px] transition duration-75 ${
                 usernameExisted ? 'border-red-500' : ''
               }`}
@@ -192,8 +191,8 @@ const Account: React.FC = () => {
         <div className="flex justify-end p-4">
           <button
             onClick={handleSubmit}
-            disabled={isChanging}
-            className="w-fit px-3 py-2 flex items-center rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition"
+            disabled={isChanging || usernameExisted}
+            className="w-fit px-3 py-2 flex items-center rounded-full bg-blue-600 dark:bg-blue-500 text-white font-semibold shadow-md hover:brightness-110 hover:scale-105 transition disabled:opacity-80 disabled:cursor-not-allowed"
           >
             Save
           </button>

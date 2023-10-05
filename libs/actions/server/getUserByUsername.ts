@@ -12,6 +12,8 @@ export default async function getUserByUsername({
         username,
       },
     })
+
+    console.log(user)
     return user
   } catch (error) {
     console.log(error)

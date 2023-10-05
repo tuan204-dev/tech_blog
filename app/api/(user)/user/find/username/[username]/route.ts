@@ -7,6 +7,7 @@ export const GET = async (req: NextRequest) => {
     await getAuthSession()
 
     const username = req.url.split('/')[req.url.split('/').length - 1]
+
     const user = await prisma.user.findFirst({
       where: {
         username,
