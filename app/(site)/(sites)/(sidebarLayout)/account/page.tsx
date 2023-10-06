@@ -51,7 +51,6 @@ const Account: React.FC = () => {
       if (username) {
         ;(async () => {
           const user = await getUserByUsername({ username })
-          console.log(user)
           setUsernameExisted(Boolean(user) && user?.username !== currentUser?.username)
         })()
       }

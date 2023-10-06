@@ -1,7 +1,8 @@
 import { BsFacebook } from 'react-icons/bs'
 import { FaGithub, FaInstagram } from 'react-icons/fa'
+import { isMobile } from 'react-device-detect'
 
-export const postsPerPage = 9
+export const postsPerPage = isMobile ? 4 : 9
 
 export const socialNetworkLinks = [
   {

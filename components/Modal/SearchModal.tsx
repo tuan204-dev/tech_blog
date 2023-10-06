@@ -14,7 +14,6 @@ const SearchModal: React.FC = () => {
   const [searchQueryDebounce, setSearchQueryDebounce] = useState<string>('')
   const { data: searchResults, isLoading } = useSearchArticle(searchQueryDebounce)
 
-  console.log(isLoading)
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

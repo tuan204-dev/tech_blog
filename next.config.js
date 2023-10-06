@@ -11,7 +11,7 @@ const nextConfig = {
   },
   experimental: {
     esmExternals: 'loose',
-    // serverActions: true,
+    serverActions: true,
   },
 }
 
